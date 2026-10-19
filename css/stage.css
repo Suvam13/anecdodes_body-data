@@ -1,0 +1,50 @@
+/* ============================================================
+   stage.css — Scroll container + flex row
+   ------------------------------------------------------------
+   The stage is the horizontal scroll viewport. The row is
+   the flex strip of hangers inside it. Layout only — no
+   visual styling of cards here.
+   ============================================================ */
+
+/* ---- Stage (scroll viewport) ---- */
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding-top: var(--stage-padding-top);
+  padding-bottom: var(--stage-padding-bottom);
+  perspective: var(--stage-perspective);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: auto;
+  -webkit-overflow-scrolling: touch;
+
+  /* Hide native scrollbar (still scrollable programmatically & via drag) */
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* IE / old Edge */
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.stage::-webkit-scrollbar { display: none; }   /* Chrome / Safari */
+
+/* While actively dragging — show grabbing cursor (set by drag-scroll.js) */
+.stage.dragging { cursor: grabbing; }
+
+/* ---- Row (flex strip of hangers) ---- */
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--row-gap);
+  padding: 0 var(--row-padding-x);
+  min-width: max-content;
+  height: 100%;
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 700px) {
+  .row {
+    gap: var(--row-gap-mobile);
+    padding: 0 var(--row-padding-x-mobile);
+  }
+}

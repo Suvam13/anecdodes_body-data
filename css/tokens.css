@@ -1,0 +1,93 @@
+/* ============================================================
+   tokens.css — Design tokens (CSS custom properties)
+   ------------------------------------------------------------
+   The single source of truth for tunable values.
+   Change a value here, it propagates everywhere.
+   ============================================================ */
+
+:root {
+  /* ---- Color: background ---- */
+  --bg-base-top: #ece4d2;
+  --bg-base-bottom: #d8cdb6;
+  --bg-glow-top: #fbf5e8;
+  --bg-glow-bottom: #b8ad97;
+  --text-color: #2d2a23;
+
+  /* ---- Color: cards (cycled per card) ---- */
+  /* These are defaults; carousel.js sets --card-color / --card-color-back
+     inline per card from the palette in data.js */
+  --card-color: #a8c97a;
+  --card-color-back: #8eb25e;
+  --card-text-front: #1f1c14;
+  --card-text-front-quote: #1a1710;
+  --card-text-back: #14110a;
+
+  /* ---- Top rail (the thin strip where pushpins sit) ---- */
+  --top-rail-height: 14px;
+  --top-rail-color: rgba(60, 50, 40, 0.18);
+
+  /* ---- Stage (scroll container) ---- */
+  --stage-padding-top: 14px;
+  --stage-padding-bottom: 24px;
+  --stage-perspective: 2200px;
+
+  /* ---- Row (flex strip of hangers) ---- */
+  --row-gap: 60px;
+  --row-padding-x: 60px;
+
+  /* ---- Card dimensions ---- */
+  --card-width: 180px;
+  --card-height: 248px;
+  --card-radius: 3px;
+  --card-padding: 26px 18px 24px;
+  --card-flip-duration: 0.85s;
+  --card-flip-easing: cubic-bezier(0.45, 0.05, 0.2, 1);
+
+  /* ---- Thread ---- */
+  --thread-width: 1.5px;
+  --thread-color-top: rgba(40, 32, 24, 0.75);
+  --thread-color-bottom: rgba(40, 32, 24, 0.4);
+  --thread-default-len: 160px;   /* fallback if JS doesn't set --thread-len */
+
+  /* ---- Pushpin (top of thread) ---- */
+  --pushpin-size: 7px;
+
+  /* ---- Knot (bottom of thread, where it ties to card) ---- */
+  --knot-size: 5px;
+  --knot-color: #2a241c;
+
+  /* ---- Card typography ---- */
+  --font-body: 'Inter', sans-serif;
+  --font-script: 'Caveat', cursive;
+  --font-devanagari: 'Noto Sans Devanagari', sans-serif;
+
+  --face-front-font-size: 21px;
+  --face-front-line-height: 1.32;
+  --face-back-font-size: 15px;
+  --face-back-line-height: 1.7;
+  --lang-label-size: 9px;
+  --num-size: 9px;
+  --hint-size: 8px;
+
+  /* ---- Footer hint ---- */
+  --footer-bottom: 18px;
+  --footer-font-size: 11px;
+  --footer-bg: rgba(255, 250, 240, 0.85);
+  --footer-text: #3d352b;
+
+  /* ---- Mobile breakpoint (shared) ---- */
+  --mobile-breakpoint: 700px;
+
+  /* ---- Mobile overrides (applied in per-component media queries) ---- */
+  --card-width-mobile: 138px;
+  --card-height-mobile: 200px;
+  --card-padding-mobile: 20px 14px 18px;
+  --face-front-font-size-mobile: 17px;
+  --face-back-font-size-mobile: 13px;
+  --lang-label-size-mobile: 8px;
+  --num-size-mobile: 8px;
+  --row-gap-mobile: 30px;
+  --row-padding-x-mobile: 30px;
+  --footer-bottom-mobile: 14px;
+  --footer-font-size-mobile: 10px;
+}

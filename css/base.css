@@ -1,0 +1,33 @@
+/* ============================================================
+   base.css — Reset, body, fonts, top-rail, scrollbar hiding
+   ------------------------------------------------------------
+   Global concerns only. No component-specific styles.
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font-body);
+  color: var(--text-color);
+  background:
+    radial-gradient(ellipse 90% 60% at 50% -10%, var(--bg-glow-top) 0%, rgba(251, 245, 232, 0) 60%),
+    radial-gradient(ellipse 100% 80% at 50% 120%, var(--bg-glow-bottom) 0%, rgba(184, 173, 151, 0) 60%),
+    linear-gradient(180deg, var(--bg-base-top) 0%, var(--bg-base-bottom) 100%);
+  background-attachment: fixed;
+  overflow: hidden;
+}
+
+/* ---- Top rail (thin strip where pushpins visually anchor) ---- */
+.top-rail {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--top-rail-height);
+  background: linear-gradient(180deg, var(--top-rail-color) 0%, rgba(60, 50, 40, 0) 100%);
+  z-index: 50;
+  pointer-events: none;
+}

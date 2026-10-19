@@ -1,0 +1,221 @@
+/* ============================================================
+   card.css — Hanger, thread, pushpin, card, faces
+   ------------------------------------------------------------
+   Everything visual about a single card and its thread.
+   The hanger is the wrapper that swings (animation defined
+   in swing.css). The thread hangs off the hanger; the card
+   hangs off the thread.
+
+   Hierarchy:
+     .hanger          (flex column, swings)
+       .thread        (the line + pushpin ::before + knot ::after)
+       .card          (flip container, preserve-3d)
+         .face.front  (English side)
+         .face.back   (Nepali side, rotated 180°)
+   ============================================================ */
+
+/* ---- Hanger (wrapper that swings) ---- */
+.hanger {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: top center;
+  animation: swing var(--swing-dur, 6s) ease-in-out infinite alternate;
+  animation-delay: var(--swing-delay, 0s);
+  will-change: transform;
+  flex-shrink: 0;
+}
+
+/* ---- Thread (the line) ---- */
+.thread {
+  width: var(--thread-width);
+  height: var(--thread-len, var(--thread-default-len));
+  background: linear-gradient(180deg,
+    var(--thread-color-top) 0%,
+    var(--thread-color-bottom) 100%);
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Pushpin at top of thread (where it meets the ceiling) */
+.thread::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--pushpin-size);
+  height: var(--pushpin-size);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #aaa 0%, #555 40%, #2a2a2a 100%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 -1px 1px rgba(0, 0, 0, 0.4);
+}
+
+/* Knot at bottom of thread (where it ties to the card) */
+.thread::after {
+  content: '';
+  position: absolute;
+  bottom: -2.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--knot-size);
+  height: var(--knot-size);
+  border-radius: 50%;
+  background: var(--knot-color);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+/* ---- Card (flip container) ---- */
+.card {
+  width: var(--card-width);
+  height: var(--card-height);
+  margin: 0 auto;
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform var(--card-flip-duration) var(--card-flip-easing);
+  border-radius: var(--card-radius);
+}
+.card.flipped { transform: rotateY(180deg); }
+
+/* ---- Card face (shared by front and back) ---- */
+.face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--card-radius);
+  padding: var(--card-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  box-shadow:
+    0 10px 18px rgba(0, 0, 0, 0.18),
+    0 3px 6px rgba(0, 0, 0, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    inset 0 0 0 2px rgba(0, 0, 0, 0.04);
+}
+.card:hover .face {
+  box-shadow:
+    0 14px 24px rgba(0, 0, 0, 0.22),
+    0 4px 8px rgba(0, 0, 0, 0.16),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    inset 0 0 0 2px rgba(0, 0, 0, 0.04);
+}
+
+/* Paper texture overlay (sits on top of bg, under text) */
+.face::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 82% 78%, rgba(0, 0, 0, 0.10) 0%, transparent 55%),
+    radial-gradient(circle at 50% 50%, transparent 65%, rgba(0, 0, 0, 0.07) 100%);
+  pointer-events: none;
+  border-radius: var(--card-radius);
+}
+
+/* ---- Front face (English) ---- */
+.face.front {
+  background: var(--card-color);
+  color: var(--card-text-front);
+}
+.face.front .lang-label {
+  position: absolute;
+  top: 11px; left: 13px;
+  font-size: var(--lang-label-size);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.55;
+  font-weight: 600;
+}
+.face.front .num {
+  position: absolute;
+  top: 11px; right: 13px;
+  font-size: var(--num-size);
+  opacity: 0.45;
+  letter-spacing: 1px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.face.front .quote {
+  font-family: var(--font-script);
+  font-size: var(--face-front-font-size);
+  line-height: var(--face-front-line-height);
+  font-weight: 600;
+  max-width: 92%;
+  color: var(--card-text-front-quote);
+}
+.face.front .hint {
+  position: absolute;
+  bottom: 11px; left: 0; right: 0;
+  font-size: var(--hint-size);
+  opacity: 0.42;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ---- Back face (Nepali) ---- */
+.face.back {
+  background: var(--card-color-back);
+  color: var(--card-text-back);
+  transform: rotateY(180deg);
+}
+.face.back .lang-label {
+  position: absolute;
+  top: 11px; right: 13px;
+  font-size: var(--lang-label-size);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.55;
+  font-weight: 600;
+}
+.face.back .num {
+  position: absolute;
+  top: 11px; left: 13px;
+  font-size: var(--num-size);
+  opacity: 0.45;
+  letter-spacing: 1px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.face.back .quote {
+  font-family: var(--font-devanagari);
+  font-size: var(--face-back-font-size);
+  line-height: var(--face-back-line-height);
+  font-weight: 500;
+  max-width: 94%;
+  color: var(--card-text-back);
+}
+.face.back .hint {
+  position: absolute;
+  bottom: 11px; left: 0; right: 0;
+  font-size: var(--hint-size);
+  opacity: 0.42;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 700px) {
+  .card {
+    width: var(--card-width-mobile);
+    height: var(--card-height-mobile);
+  }
+  .face {
+    padding: var(--card-padding-mobile);
+  }
+  .face.front .quote { font-size: var(--face-front-font-size-mobile); }
+  .face.back .quote { font-size: var(--face-back-font-size-mobile); }
+  .face.front .lang-label, .face.back .lang-label,
+  .face.front .num, .face.back .num {
+    font-size: var(--lang-label-size-mobile);
+  }
+}

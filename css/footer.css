@@ -1,0 +1,33 @@
+/* ============================================================
+   footer.css — Footer hint pill
+   ------------------------------------------------------------
+   The small floating "Scroll horizontally · Tap to flip" hint.
+   ============================================================ */
+
+.footer-hint {
+  position: fixed;
+  bottom: var(--footer-bottom);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--footer-font-size);
+  color: var(--footer-text);
+  background: var(--footer-bg);
+  padding: 8px 18px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 50;
+  letter-spacing: 0.4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 700px) {
+  .footer-hint {
+    font-size: var(--footer-font-size-mobile);
+    padding: 7px 14px;
+    bottom: var(--footer-bottom-mobile);
+  }
+}

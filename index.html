@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anecdodes</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles (order matters: tokens first, then base, then components, then animations) -->
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/footer.css" />
+    <link rel="stylesheet" href="css/stage.css" />
+    <link rel="stylesheet" href="css/card.css" />
+    <link rel="stylesheet" href="css/swing.css" />
+  </head>
+  <body>
+    <!-- Top rail (thin strip where pushpins visually anchor) -->
+    <div class="top-rail"></div>
+
+    <!-- Header placeholder — when you add a header, drop its markup here
+       and style it in css/header.css -->
+
+    <!-- Stage: horizontal scroll viewport containing the row of hangers -->
+    <div class="stage" id="stage">
+      <div class="row" id="row"></div>
+    </div>
+
+    <!-- Footer hint -->
+    <div class="footer-hint">
+      Scroll horizontally · Tap a card to flip · English → नेपाली
+    </div>
+
+    <!-- Entry point (ES module) -->
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

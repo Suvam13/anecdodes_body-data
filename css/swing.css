@@ -1,0 +1,12 @@
+/* ============================================================
+   swing.css — Pendulum keyframes
+   ------------------------------------------------------------
+   The dangling swing animation applied to .hanger in card.css.
+   Kept separate so future animations (float, glow, etc.) can
+   live in their own files without bloating card.css.
+   ============================================================ */
+
+@keyframes swing {
+  0%   { transform: rotate(-1.4deg); }
+  100% { transform: rotate(1.4deg); }
+}
