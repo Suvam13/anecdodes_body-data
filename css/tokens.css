@@ -32,11 +32,11 @@
   --stage-perspective: 2200px;
 
   /* ---- Row (flex strip of hangers) ---- */
-  --row-gap: 60px;
+  --row-gap: 90px;
   --row-padding-x: 60px;
 
   /* ---- Card dimensions ---- */
-  --card-width: 180px;
+  --card-width: 150px;
   --card-height: 248px;
   --card-radius: 3px;
   --card-padding: 26px 18px 24px;
@@ -79,15 +79,129 @@
   --mobile-breakpoint: 700px;
 
   /* ---- Mobile overrides (applied in per-component media queries) ---- */
-  --card-width-mobile: 138px;
+  --card-width-mobile: 115px;
   --card-height-mobile: 200px;
   --card-padding-mobile: 20px 14px 18px;
   --face-front-font-size-mobile: 17px;
   --face-back-font-size-mobile: 13px;
   --lang-label-size-mobile: 8px;
   --num-size-mobile: 8px;
-  --row-gap-mobile: 30px;
+  --row-gap-mobile: 50px;
   --row-padding-x-mobile: 30px;
   --footer-bottom-mobile: 14px;
   --footer-font-size-mobile: 10px;
+
+  /* ============================================================
+     GALLERY BACKGROUND — Spotlight from above + floor
+     ============================================================ */
+
+  /* Spotlight (warm overhead light, ellipse centered upper-middle) */
+  --spotlight-color: rgba(255, 246, 222, 0.55);
+  --spotlight-x: 50%;
+  --spotlight-y: -10%;
+  --spotlight-width: 75%;
+  --spotlight-height: 70%;
+
+  /* Wall tone (slightly darker at edges for vignette feel) */
+  --wall-edge-color: rgba(120, 105, 85, 0.18);
+
+  /* Floor (subtle warm wood tone in bottom 20% of viewport) */
+  --floor-color-top: rgba(165, 130, 95, 0.10);   /* fades in from wall */
+  --floor-color-bottom: rgba(140, 105, 75, 0.28); /* richer at the very bottom */
+  --floor-height: 22%;                            /* how much of viewport the floor covers */
+
+  /* Horizon line (1px line where wall meets floor) */
+  --horizon-color: rgba(80, 65, 50, 0.18);
+  --horizon-blur: 2px;
+
+  /* ============================================================
+     DEPTH SYSTEM — Three Z-layers for parallax-like depth
+     ------------------------------------------------------------
+     Each card gets one depth class (.hanger.near/.mid/.far).
+     The class controls: size multiplier, thread length range,
+     shadow size/darkness, atmospheric haze, swing amplitude.
+     ============================================================ */
+
+  /* Near layer (closest to viewer, ~25% of cards) */
+  --depth-near-scale: 1.15;                       /* 15% bigger than mid */
+  --depth-near-thread-min: 220px;
+  --depth-near-thread-max: 280px;
+  --depth-near-shadow: 0 16px 32px rgba(40, 32, 24, 0.32),
+                       0 6px 12px rgba(40, 32, 24, 0.20);
+  --depth-near-shadow-hover: 0 24px 44px rgba(40, 32, 24, 0.40),
+                             0 10px 18px rgba(40, 32, 24, 0.24);
+  --depth-near-haze: none;                        /* no haze up close */
+  --depth-near-swing-amp: 2deg;                   /* swings wider */
+  --depth-near-hover-lift: 14px;                  /* how far it lifts on hover */
+
+  /* Mid layer (default, ~50% of cards) */
+  --depth-mid-scale: 1.0;
+  --depth-mid-thread-min: 100px;
+  --depth-mid-thread-max: 200px;
+  --depth-mid-shadow: 0 10px 18px rgba(40, 32, 24, 0.18),
+                      0 3px 6px rgba(40, 32, 24, 0.12);
+  --depth-mid-shadow-hover: 0 16px 28px rgba(40, 32, 24, 0.26),
+                            0 5px 10px rgba(40, 32, 24, 0.16);
+  --depth-mid-haze: none;
+  --depth-mid-swing-amp: 1.4deg;
+  --depth-mid-hover-lift: 10px;
+
+  /* Far layer (distant, ~25% of cards) */
+  --depth-far-scale: 0.88;                        /* only 12% smaller than mid (was 0.78) */
+  --depth-far-thread-min: 80px;
+  --depth-far-thread-max: 140px;
+  --depth-far-shadow: 0 5px 10px rgba(40, 32, 24, 0.10),
+                      0 1px 3px rgba(40, 32, 24, 0.06);
+  --depth-far-shadow-hover: 0 9px 16px rgba(40, 32, 24, 0.16),
+                            0 2px 5px rgba(40, 32, 24, 0.10);
+  --depth-far-haze: rgba(245, 235, 215, 0.08);   /* 8% cream tint */
+  --depth-far-swing-amp: 0.8deg;                  /* swings less (looks subtler) */
+  --depth-far-hover-lift: 6px;
+
+  /* Directional shadow offset (light from upper-left, shadow falls down-right) */
+  --shadow-offset-x: 6px;
+  --shadow-offset-y: 14px;
+
+  /* ============================================================
+     CARD SIZE VARIANTS — Three aspect ratios per depth tier
+     ------------------------------------------------------------
+     Applied via .card.portrait / .card.note / .card.square.
+     Dimensions are relative to --card-width / --card-height,
+     then scaled further by the depth multiplier.
+     ============================================================ */
+
+  --ratio-portrait-w: 1.0;    /* 180 × 248 (1:1.38) */
+  --ratio-portrait-h: 1.0;
+
+  --ratio-note-w: 1.05;       /* 189 × 208 (1:1.1) — squarer, like a sticky note */
+  --ratio-note-h: 0.84;
+
+  --ratio-square-w: 0.92;     /* 166 × 166 (1:1.0) — small square card */
+  --ratio-square-h: 0.67;
+
+  /* ============================================================
+     THREAD HIGHLIGHT — Light catching the left edge of the thread
+     ============================================================ */
+
+  --thread-highlight-color: rgba(255, 245, 220, 0.35);
+  --thread-highlight-width: 0.5px;
+
+  /* ============================================================
+     HOVER LIFT — Card lifts toward viewer on hover
+     ============================================================ */
+
+  --hover-lift-duration: 0.35s;
+  --hover-lift-easing: cubic-bezier(0.2, 0.7, 0.3, 1);
+
+  /* ============================================================
+     BREEZE — Occasional soft gust that swings all cards together
+     ------------------------------------------------------------
+     Triggered by JS adding .breeze class to .row every 18–35s.
+     Animation lasts --breeze-duration, then class is removed.
+     ============================================================ */
+
+  --breeze-duration: 4s;
+  --breeze-gust-angle: 3.5deg;                   /* peak angle of the gust */
+  --breeze-easing: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  --breeze-stagger: 90ms;                        /* delay between consecutive cards */
 }

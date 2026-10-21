@@ -7,15 +7,35 @@
    hangs off the thread.
 
    Hierarchy:
-     .hanger          (flex column, swings)
+     .hanger          (flex column, swings; has .near/.mid/.far)
        .thread        (the line + pushpin ::before + knot ::after)
-       .card          (flip container, preserve-3d)
+       .card          (flip container, preserve-3d; has .portrait/.note/.square)
          .face.front  (English side)
          .face.back   (Nepali side, rotated 180°)
+
+   Depth-aware properties (consume vars set by depth.css):
+     - --depth-scale:    multiplies card dimensions
+     - --card-shadow:    normal shadow on face
+     - --card-shadow-hover: shadow on hover
+     - --hover-lift:     how far card lifts on hover
    ============================================================ */
 
-/* ---- Hanger (wrapper that swings) ---- */
+/* ---- Hanger (wrapper) ----
+   The hanger no longer swings — it's a static column containing
+   thread + swing wrapper + card. The pin stays put, the thread
+   stays put, only the card swings (via .swing below). */
 .hanger {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ---- Swing wrapper (rotates with the pendulum motion) ----
+   Sits between the thread (above) and the card (below).
+   Pivot is at the TOP (where the knot is), so the card swings
+   beneath a stationary thread — like a real card on a string. */
+.swing {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,16 +43,25 @@
   animation: swing var(--swing-dur, 6s) ease-in-out infinite alternate;
   animation-delay: var(--swing-delay, 0s);
   will-change: transform;
-  flex-shrink: 0;
 }
 
 /* ---- Thread (the line) ---- */
 .thread {
   width: var(--thread-width);
   height: var(--thread-len, var(--thread-default-len));
-  background: linear-gradient(180deg,
-    var(--thread-color-top) 0%,
-    var(--thread-color-bottom) 100%);
+  /* Base thread color + a thin highlight stripe on the left edge
+     (light catching the thread from upper-left) */
+  background:
+    linear-gradient(
+      90deg,
+      var(--thread-highlight-color) 0%,
+      var(--thread-highlight-color) var(--thread-highlight-width),
+      transparent var(--thread-highlight-width),
+      transparent 100%
+    ),
+    linear-gradient(180deg,
+      var(--thread-color-top) 0%,
+      var(--thread-color-bottom) 100%);
   margin: 0 auto;
   position: relative;
 }
@@ -66,18 +95,45 @@
 }
 
 /* ---- Card (flip container) ---- */
+/* Width/height are now depth-aware: base size × ratio variant × depth scale.
+   The calc() multiplies three values together so any combination works:
+   e.g. a .card.note inside .hanger.near = 180 × 1.05 × 1.15 = 217px wide */
 .card {
-  width: var(--card-width);
-  height: var(--card-height);
+  width: calc(var(--card-width) * var(--ratio-w, 1) * var(--depth-scale, 1));
+  height: calc(var(--card-height) * var(--ratio-h, 1) * var(--depth-scale, 1));
   margin: 0 auto;
   position: relative;
   cursor: pointer;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-  transition: transform var(--card-flip-duration) var(--card-flip-easing);
+  transition:
+    transform var(--card-flip-duration) var(--card-flip-easing),
+    translate var(--hover-lift-duration) var(--hover-lift-easing);
   border-radius: var(--card-radius);
 }
 .card.flipped { transform: rotateY(180deg); }
+
+/* Hover lift — card rises toward viewer (translateZ) + shadow deepens.
+   Lift distance comes from --hover-lift (set by depth.css per layer). */
+.card:hover {
+  translate: 0 0 var(--hover-lift, 8px);
+}
+
+/* ---- Card size variants (three aspect ratios) ---- */
+/* --ratio-w and --ratio-h are consumed by .card's width/height calc above.
+   carousel.js assigns one of these classes per card. */
+.card.portrait {
+  --ratio-w: var(--ratio-portrait-w);
+  --ratio-h: var(--ratio-portrait-h);
+}
+.card.note {
+  --ratio-w: var(--ratio-note-w);
+  --ratio-h: var(--ratio-note-h);
+}
+.card.square {
+  --ratio-w: var(--ratio-square-w);
+  --ratio-h: var(--ratio-square-h);
+}
 
 /* ---- Card face (shared by front and back) ---- */
 .face {
@@ -93,21 +149,22 @@
   align-items: center;
   text-align: center;
   overflow: hidden;
+  /* Directional shadow (light from upper-left → shadow falls down-right).
+     Offset by --shadow-offset-x/y; blur+color come from --card-shadow
+     (which is set per depth layer by depth.css). */
   box-shadow:
-    0 10px 18px rgba(0, 0, 0, 0.18),
-    0 3px 6px rgba(0, 0, 0, 0.12),
+    var(--shadow-offset-x) var(--shadow-offset-y) var(--card-shadow, 0 10px 18px rgba(0, 0, 0, 0.18)),
     inset 0 0 0 1px rgba(255, 255, 255, 0.18),
     inset 0 0 0 2px rgba(0, 0, 0, 0.04);
 }
 .card:hover .face {
   box-shadow:
-    0 14px 24px rgba(0, 0, 0, 0.22),
-    0 4px 8px rgba(0, 0, 0, 0.16),
+    var(--shadow-offset-x) var(--shadow-offset-y) var(--card-shadow-hover, 0 16px 28px rgba(0, 0, 0, 0.26)),
     inset 0 0 0 1px rgba(255, 255, 255, 0.18),
     inset 0 0 0 2px rgba(0, 0, 0, 0.04);
 }
 
-/* Paper texture overlay (sits on top of bg, under text) */
+/* Paper texture overlay (sits on top of bg, under text, under haze) */
 .face::before {
   content: '';
   position: absolute;
@@ -118,6 +175,13 @@
     radial-gradient(circle at 50% 50%, transparent 65%, rgba(0, 0, 0, 0.07) 100%);
   pointer-events: none;
   border-radius: var(--card-radius);
+  z-index: 0;
+}
+
+/* Ensure text content sits above ::before (texture) and ::after (haze) */
+.face > * {
+  position: relative;
+  z-index: 2;
 }
 
 /* ---- Front face (English) ---- */
@@ -205,9 +269,10 @@
 
 /* ---- Mobile ---- */
 @media (max-width: 700px) {
+  /* Override base card dimensions; depth-scale & ratio still multiply on top */
   .card {
-    width: var(--card-width-mobile);
-    height: var(--card-height-mobile);
+    --card-width: var(--card-width-mobile);
+    --card-height: var(--card-height-mobile);
   }
   .face {
     padding: var(--card-padding-mobile);

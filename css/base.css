@@ -1,7 +1,14 @@
 /* ============================================================
-   base.css — Reset, body, fonts, top-rail, scrollbar hiding
+   base.css — Reset, body, fonts, top-rail, gallery background
    ------------------------------------------------------------
    Global concerns only. No component-specific styles.
+
+   Body background layers (top to bottom in paint order):
+     1. Linear gradient — base wall tone (top → bottom)
+     2. Radial spotlight — warm overhead light from upper-center
+     3. Radial vignette — darker edges (wall recedes)
+     4. Linear floor — warm wood tone in bottom 22% of viewport
+     5. Horizon line — 1px line where wall meets floor
    ============================================================ */
 
 *, *::before, *::after {
@@ -15,8 +22,33 @@ html, body {
   font-family: var(--font-body);
   color: var(--text-color);
   background:
-    radial-gradient(ellipse 90% 60% at 50% -10%, var(--bg-glow-top) 0%, rgba(251, 245, 232, 0) 60%),
-    radial-gradient(ellipse 100% 80% at 50% 120%, var(--bg-glow-bottom) 0%, rgba(184, 173, 151, 0) 60%),
+    /* 5. Horizon line (sharp 1px line, slightly blurred) */
+    linear-gradient(
+      to bottom,
+      transparent calc(100% - var(--floor-height) - 1px),
+      var(--horizon-color) calc(100% - var(--floor-height)),
+      transparent calc(100% - var(--floor-height) + 1px)
+    ),
+    /* 4. Floor gradient (warm wood tone in bottom 22%) */
+    linear-gradient(
+      to bottom,
+      transparent calc(100% - var(--floor-height)),
+      var(--floor-color-top) calc(100% - var(--floor-height)),
+      var(--floor-color-bottom) 100%
+    ),
+    /* 3. Vignette (darker edges) */
+    radial-gradient(
+      ellipse 110% 90% at 50% 50%,
+      transparent 50%,
+      var(--wall-edge-color) 100%
+    ),
+    /* 2. Spotlight (warm overhead light) */
+    radial-gradient(
+      ellipse var(--spotlight-width) var(--spotlight-height) at var(--spotlight-x) var(--spotlight-y),
+      var(--spotlight-color) 0%,
+      transparent 70%
+    ),
+    /* 1. Base wall tone */
     linear-gradient(180deg, var(--bg-base-top) 0%, var(--bg-base-bottom) 100%);
   background-attachment: fixed;
   overflow: hidden;
