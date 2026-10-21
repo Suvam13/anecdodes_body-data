@@ -7,11 +7,11 @@
 
 :root {
   /* ---- Color: background ---- */
-  --bg-base-top: #ece4d2;
-  --bg-base-bottom: #d8cdb6;
-  --bg-glow-top: #fbf5e8;
-  --bg-glow-bottom: #b8ad97;
-  --text-color: #2d2a23;
+  --bg-base-top: #224e57;
+  --bg-base-bottom: #398a9c;
+  --bg-glow-top: #5ee2e9b5;
+  --bg-glow-bottom: #809dcc;
+  --text-color: #372e18;
 
   /* ---- Color: cards (cycled per card) ---- */
   /* These are defaults; carousel.js sets --card-color / --card-color-back
@@ -24,7 +24,7 @@
 
   /* ---- Top rail (the thin strip where pushpins sit) ---- */
   --top-rail-height: 14px;
-  --top-rail-color: rgba(60, 50, 40, 0.18);
+  --top-rail-color: rgba(49, 60, 40, 0.18);
 
   /* ---- Stage (scroll container) ---- */
   --stage-padding-top: 14px;
@@ -96,22 +96,22 @@
      ============================================================ */
 
   /* Spotlight (warm overhead light, ellipse centered upper-middle) */
-  --spotlight-color: rgba(255, 246, 222, 0.55);
+  --spotlight-color: rgba(240, 254, 253, 0.912);
   --spotlight-x: 50%;
-  --spotlight-y: -10%;
-  --spotlight-width: 75%;
+  --spotlight-y: -24%;
+  --spotlight-width: 70%;
   --spotlight-height: 70%;
 
   /* Wall tone (slightly darker at edges for vignette feel) */
-  --wall-edge-color: rgba(120, 105, 85, 0.18);
+  --wall-edge-color: rgba(85, 101, 120, 0.18);
 
   /* Floor (subtle warm wood tone in bottom 20% of viewport) */
-  --floor-color-top: rgba(165, 130, 95, 0.10);   /* fades in from wall */
-  --floor-color-bottom: rgba(140, 105, 75, 0.28); /* richer at the very bottom */
+  --floor-color-top: rgba(95, 132, 165, 0.356);   /* fades in from wall */
+  --floor-color-bottom: rgba(87, 140, 75, 0.28); /* richer at the very bottom */
   --floor-height: 22%;                            /* how much of viewport the floor covers */
 
   /* Horizon line (1px line where wall meets floor) */
-  --horizon-color: rgba(80, 65, 50, 0.18);
+  --horizon-color: rgba(50, 68, 80, 0.18);
   --horizon-blur: 2px;
 
   /* ============================================================
@@ -204,4 +204,16 @@
   --breeze-gust-angle: 3.5deg;                   /* peak angle of the gust */
   --breeze-easing: cubic-bezier(0.45, 0.05, 0.55, 0.95);
   --breeze-stagger: 90ms;                        /* delay between consecutive cards */
+
+  /* ============================================================
+     AUTO-SCROLL — Slow continuous rotation when user is idle
+     ------------------------------------------------------------
+     Driven by requestAnimationFrame in js/auto-scroll.js.
+     Speed is in pixels per second (negative = scroll right→left).
+     Pauses for AUTO_SCROLL_PAUSE_MS after any user interaction
+     (drag, manual scroll, or click), then resumes.
+     ============================================================ */
+
+  --auto-scroll-speed: 22px;                     /* px per second (use as scalar) */
+  --auto-scroll-pause-ms: 3500;                  /* idle time before resuming after interaction */
 }
