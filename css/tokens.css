@@ -7,18 +7,18 @@
 
 :root {
   /* ---- Color: background ---- */
-  --bg-base-top: #224e57;
-  --bg-base-bottom: #398a9c;
-  --bg-glow-top: #5ee2e9b5;
-  --bg-glow-bottom: #809dcc;
+  --bg-base-top: #ffacd34e;
+  --bg-base-bottom: #d37291;
+  --bg-glow-top: #e9c65eb5;
+  --bg-glow-bottom: #cc80c2;
   --text-color: #372e18;
 
   /* ---- Color: cards (cycled per card) ---- */
   /* These are defaults; carousel.js sets --card-color / --card-color-back
      inline per card from the palette in data.js */
   --card-color: #a8c97a;
-  --card-color-back: #8eb25e;
-  --card-text-front: #1f1c14;
+  --card-color-back: #b25e90;
+  --card-text-front: #1f1419;
   --card-text-front-quote: #1a1710;
   --card-text-back: #14110a;
 
@@ -54,7 +54,7 @@
 
   /* ---- Knot (bottom of thread, where it ties to card) ---- */
   --knot-size: 5px;
-  --knot-color: #2a241c;
+  --knot-color: #2a1c26;
 
   /* ---- Card typography ---- */
   --font-body: 'Inter', sans-serif;
@@ -72,7 +72,7 @@
   /* ---- Footer hint ---- */
   --footer-bottom: 18px;
   --footer-font-size: 11px;
-  --footer-bg: rgba(255, 250, 240, 0.85);
+  --footer-bg: rgba(255, 240, 252, 0.85);
   --footer-text: #3d352b;
 
   /* ---- Mobile breakpoint (shared) ---- */
@@ -96,7 +96,7 @@
      ============================================================ */
 
   /* Spotlight (warm overhead light, ellipse centered upper-middle) */
-  --spotlight-color: rgba(240, 254, 253, 0.912);
+  --spotlight-color: rgba(240, 250, 254, 0.912);
   --spotlight-x: 50%;
   --spotlight-y: -24%;
   --spotlight-width: 70%;
@@ -106,8 +106,8 @@
   --wall-edge-color: rgba(85, 101, 120, 0.18);
 
   /* Floor (subtle warm wood tone in bottom 20% of viewport) */
-  --floor-color-top: rgba(95, 132, 165, 0.356);   /* fades in from wall */
-  --floor-color-bottom: rgba(87, 140, 75, 0.28); /* richer at the very bottom */
+  --floor-color-top: rgba(165, 95, 95, 0.356);   /* fades in from wall */
+  --floor-color-bottom: rgba(88, 75, 140, 0.28); /* richer at the very bottom */
   --floor-height: 22%;                            /* how much of viewport the floor covers */
 
   /* Horizon line (1px line where wall meets floor) */
