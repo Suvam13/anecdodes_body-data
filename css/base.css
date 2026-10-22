@@ -3,12 +3,20 @@
    ------------------------------------------------------------
    Global concerns only. No component-specific styles.
 
-   Body background layers (top to bottom in paint order):
-     1. Linear gradient — base wall tone (top → bottom)
-     2. Radial spotlight — warm overhead light from upper-center
-     3. Radial vignette — darker edges (wall recedes)
-     4. Linear floor — warm wood tone in bottom 22% of viewport
-     5. Horizon line — 1px line where wall meets floor
+   The room is built from five layers, back to front:
+     1. html            cream plaster wall: overhead light, window
+                        glow, shaded corners, mottling + fine grain
+     2. html::before    out-of-focus gallery: dark curtain + blurred
+                        coloured posters (like the photos' background)
+     3. html::after     wooden floor + skirting board, with coloured
+                        light bouncing off the cards
+     4. (the stage)     threads and cards
+     5. body::after     photographic finish over everything:
+                        darkened corners + film grain
+                        (pointer-events: none, so clicks pass through)
+
+   The grain/fibre/wood/doodle textures are inline SVG noise defined
+   as --tex-* tokens in tokens.css, so there are no image files.
    ============================================================ */
 
 *, *::before, *::after {
@@ -21,45 +29,122 @@ html, body {
   height: 100%;
   font-family: var(--font-body);
   color: var(--text-color);
-  background:
-    /* 5. Horizon line (sharp 1px line, slightly blurred) */
-    linear-gradient(
-      to bottom,
-      transparent calc(100% - var(--floor-height) - 1px),
-      var(--horizon-color) calc(100% - var(--floor-height)),
-      transparent calc(100% - var(--floor-height) + 1px)
-    ),
-    /* 4. Floor gradient (warm wood tone in bottom 22%) */
-    linear-gradient(
-      to bottom,
-      transparent calc(100% - var(--floor-height)),
-      var(--floor-color-top) calc(100% - var(--floor-height)),
-      var(--floor-color-bottom) 100%
-    ),
-    /* 3. Vignette (darker edges) */
-    radial-gradient(
-      ellipse 110% 90% at 50% 50%,
-      transparent 50%,
-      var(--wall-edge-color) 100%
-    ),
-    /* 2. Spotlight (warm overhead light) */
-    radial-gradient(
-      ellipse var(--spotlight-width) var(--spotlight-height) at var(--spotlight-x) var(--spotlight-y),
-      var(--spotlight-color) 0%,
-      transparent 70%
-    ),
-    /* 1. Base wall tone */
-    linear-gradient(180deg, var(--bg-base-top) 0%, var(--bg-base-bottom) 100%);
-  background-attachment: fixed;
   overflow: hidden;
 }
 
-/* ---- Top rail (thin strip where pushpins visually anchor) ---- */
+/* ---- 1. Wall ---- */
+html {
+  background-color: var(--wall-base);
+  background-image:
+    /* overhead light */
+    radial-gradient(
+      ellipse var(--spotlight-width) var(--spotlight-height) at var(--spotlight-x) var(--spotlight-y),
+      var(--spotlight-color),
+      transparent
+    ),
+    /* daylight from a window, right side */
+    radial-gradient(ellipse 34% 46% at 92% 32%, var(--window-glow), transparent 72%),
+    /* lower corners fall into shade */
+    radial-gradient(ellipse 60% 55% at -6% 100%, var(--wall-edge-color), transparent 70%),
+    radial-gradient(ellipse 60% 55% at 106% 100%, var(--wall-edge-color), transparent 70%),
+    /* big soft mottling + fine plaster grain */
+    var(--tex-clouds) 0 0 / 640px 640px,
+    var(--tex-plaster) 0 0 / 200px 200px,
+    /* base wall tone */
+    linear-gradient(180deg, var(--bg-base-top) 0%, var(--bg-base-bottom) 100%);
+}
+
+/* ---- 2. Out-of-focus gallery: dark curtain on the far left and blurred
+          coloured posters. Static, so the blur is only painted once. ---- */
+html::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  opacity: 0.6;
+  filter: blur(6px);
+  background:
+    /* curtain */
+    linear-gradient(90deg, rgba(28, 20, 17, 0.95) 0, rgba(28, 20, 17, 0.88) 3vw, rgba(28, 20, 17, 0) 8vw)
+      0 0 / 100% 100% no-repeat,
+    /* left cluster */
+    linear-gradient(#d4392e, #d4392e) 15% 36% / 12vw 22vh no-repeat,
+    linear-gradient(#8a5fc8, #8a5fc8) 25% 60% / 8vw 14vh no-repeat,
+    linear-gradient(#2eb6c8, #2eb6c8) 9% 64% / 7vw 11vh no-repeat,
+    linear-gradient(#f9dc2d, #f9dc2d) 27% 28% / 6vw 9vh no-repeat,
+    /* right cluster */
+    linear-gradient(#d4392e, #d4392e) 80% 32% / 11vw 20vh no-repeat,
+    linear-gradient(#f58a1d, #f58a1d) 92% 54% / 7vw 12vh no-repeat,
+    linear-gradient(#8a5fc8, #8a5fc8) 70% 62% / 9vw 14vh no-repeat,
+    linear-gradient(#2eb6c8, #2eb6c8) 87% 22% / 6vw 9vh no-repeat,
+    linear-gradient(#f9dc2d, #f9dc2d) 97% 40% / 5vw 8vh no-repeat,
+    /* pale posters in the middle so the wall is never bare */
+    linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.55)) 44% 40% / 9vw 14vh no-repeat,
+    linear-gradient(rgba(190, 175, 150, 0.45), rgba(190, 175, 150, 0.45)) 58% 52% / 7vw 11vh no-repeat;
+}
+
+/* ---- 3. Floor: boards running toward a vanishing point above the floor,
+          a skirting board, and coloured light bouncing off the cards ---- */
+html::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(var(--floor-height) + var(--skirting-height));
+  z-index: -2;
+  pointer-events: none;
+  background:
+    /* skirting board */
+    linear-gradient(180deg,
+      var(--skirting-light) 0 62%,
+      var(--skirting-shade) 62% 82%,
+      rgba(40, 24, 10, 0.45) 82% 100%) top / 100% var(--skirting-height) no-repeat,
+    /* shadow the skirting casts on the floor */
+    linear-gradient(180deg, rgba(30, 18, 8, 0.38), transparent)
+      0 var(--skirting-height) / 100% 26px no-repeat,
+    /* coloured light bouncing from the cards */
+    radial-gradient(ellipse 18% 60% at 22% 8%, rgba(255, 150, 55, 0.22), transparent),
+    radial-gradient(ellipse 18% 60% at 50% 8%, rgba(150, 100, 210, 0.16), transparent),
+    radial-gradient(ellipse 18% 60% at 78% 8%, rgba(60, 190, 205, 0.18), transparent),
+    /* light pooling on the boards */
+    radial-gradient(ellipse 70% 90% at 50% 0%, rgba(255, 243, 214, 0.38), transparent 75%),
+    /* plank seams */
+    repeating-conic-gradient(at 50% -140%,
+      transparent 0deg 3.4deg,
+      rgba(45, 25, 8, 0.20) 3.4deg 3.6deg,
+      rgba(255, 232, 190, 0.10) 3.6deg 4deg),
+    /* wood grain + base colour */
+    var(--tex-wood) 0 0 / 240px 720px,
+    linear-gradient(180deg, var(--floor-color-top), var(--floor-color-bottom));
+}
+
+/* ---- 5. Photographic finish: darkened corners + film grain ---- */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.4;
+  background:
+    radial-gradient(ellipse 125% 105% at 50% 42%, transparent 52%, var(--vignette-color) 100%),
+    var(--tex-grain-dark) 0 0 / 160px 160px;
+}
+
+/* ---- Top rail: a wooden batten the yarn hangs from ---- */
 .top-rail {
   position: fixed;
   top: 0; left: 0; right: 0;
   height: var(--top-rail-height);
-  background: linear-gradient(180deg, var(--top-rail-color) 0%, rgba(60, 50, 40, 0) 100%);
+  background:
+    linear-gradient(180deg, rgba(255, 230, 190, 0.38) 0 1px, transparent 1px),
+    var(--tex-grain-dark) 0 0 / 160px 160px,
+    linear-gradient(180deg, #86633f 0%, #654528 55%, #46301a 100%);
+  box-shadow:
+    0 2px 3px rgba(40, 24, 8, 0.45),
+    0 9px 14px -4px rgba(40, 24, 8, 0.40);
   z-index: 50;
   pointer-events: none;
 }
