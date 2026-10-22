@@ -55,7 +55,7 @@ const CONFIG = {
   THREAD_RANGES: {
     near: { min: 100, max: 160 },
     mid:  { min: 110,  max: 170 },
-    far:  { min: 130,  max: 200 },
+    far:  { min: 120,  max: 200 },
   },
 
   // Sine-wave placement — produces smooth, organic variation across the
