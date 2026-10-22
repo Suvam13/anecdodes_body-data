@@ -53,9 +53,9 @@ const CONFIG = {
   // appear higher up (shorter threads).
   // SHORTENED to compensate for the header taking vertical space at the top.
   THREAD_RANGES: {
-    near: { min: 90, max: 150 },
-    mid:  { min: 100,  max: 160 },
-    far:  { min: 110,  max: 170 },
+    near: { min: 100, max: 160 },
+    mid:  { min: 110,  max: 170 },
+    far:  { min: 130,  max: 200 },
   },
 
   // Sine-wave placement — produces smooth, organic variation across the
