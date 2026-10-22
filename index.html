@@ -1,11 +1,11 @@
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Surveillance Stories — Dangling Cards</title>
+    <title>Anecdotes — Dangling Cards</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,7 +13,6 @@
       rel="stylesheet"
     />
 
-    <!-- Styles (order matters: tokens first, then base, then components, then animations) -->
     <link rel="stylesheet" href="css/tokens.css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/header.css" />
@@ -25,26 +24,21 @@
     <link rel="stylesheet" href="css/breeze.css" />
   </head>
   <body>
-    <!-- Site header (title + description, sits on the gallery wall) -->
     <header class="site-header">
       <h1 class="site-title">Anecdotes</h1>
       <p class="site-desc">These are stories from people on the internet</p>
     </header>
 
-    <!-- Top rail (wooden batten the yarn hangs from, sits just below the header) -->
     <div class="top-rail"></div>
 
-    <!-- Stage: horizontal scroll viewport containing the row of hangers -->
     <div class="stage" id="stage">
       <div class="row" id="row"></div>
     </div>
 
-    <!-- Footer hint -->
     <div class="footer-hint">
-      Scroll horizontally · Tap a card to flip · English → नेपाली
+      Scroll horizontally · Tap a card to flip from English → नेपाली
     </div>
 
-    <!-- Entry point (ES module) -->
     <script type="module" src="js/main.js"></script>
   </body>
 </html>

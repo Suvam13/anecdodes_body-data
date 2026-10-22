@@ -1,17 +1,3 @@
-/* ============================================================
-   base.css — Reset, body, fonts, top-rail, gallery background
-   ------------------------------------------------------------
-   Global concerns only. No component-specific styles.
-
-   The room is built from three layers, back to front:
-     1. html        cream plaster wall: overhead light, window
-                    glow, shaded corners, mottling + fine grain
-     2. html::after matte wooden floor + skirting board
-     3. (the stage) threads and cards
-
-   The grain/fibre/wood textures are inline SVG noise defined
-   as --tex-* tokens in tokens.css, so there are no image files.
-   ============================================================ */
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -26,31 +12,39 @@ html, body {
   overflow: hidden;
 }
 
-/* ---- 1. Wall ---- */
 html {
   background-color: var(--wall-base);
   background-image:
-    /* overhead light */
     radial-gradient(
-      ellipse var(--spotlight-width) var(--spotlight-height) at var(--spotlight-x) var(--spotlight-y),
+      ellipse var(--spotlight-width) var(--spotlight-height)
+      at var(--spotlight-x) var(--spotlight-y),
       var(--spotlight-color),
       transparent
     ),
-    /* daylight from a window, right side */
-    radial-gradient(ellipse 34% 46% at 92% 32%, var(--window-glow), transparent 72%),
-    /* lower corners fall into shade */
-    radial-gradient(ellipse 60% 55% at -6% 100%, var(--wall-edge-color), transparent 70%),
-    radial-gradient(ellipse 60% 55% at 106% 100%, var(--wall-edge-color), transparent 70%),
-    /* big soft mottling + fine plaster grain */
+    radial-gradient(
+      ellipse 34% 46% at 92% 32%,
+      var(--window-glow),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 60% 55% at -6% 100%,
+      var(--wall-edge-color),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 60% 55% at 106% 100%,
+      var(--wall-edge-color),
+      transparent 70%
+    ),
     var(--tex-clouds) 0 0 / 640px 640px,
     var(--tex-plaster) 0 0 / 200px 200px,
-    /* base wall tone */
-    linear-gradient(180deg, var(--bg-base-top) 0%, var(--bg-base-bottom) 100%);
+    linear-gradient(
+      180deg,
+      var(--bg-base-top) 0%,
+      var(--bg-base-bottom) 100%
+    );
 }
 
-/* ---- 2. Floor: MATTE pale boards with a skirting board.
-          Same colour family as the top rail for visual consistency.
-          Just flat colour + soft grain + subtle vertical plank seams. ---- */
 html::after {
   content: "";
   position: fixed;
@@ -61,35 +55,51 @@ html::after {
   z-index: -2;
   pointer-events: none;
   background:
-    /* skirting board */
-    linear-gradient(180deg,
+    linear-gradient(
+      180deg,
       var(--skirting-light) 0 62%,
       var(--skirting-shade) 62% 82%,
-      rgba(95, 64, 31, 0.3) 82% 100%) top / 100% var(--skirting-height) no-repeat,
-    /* soft shadow the skirting casts on the floor (matte, not glossy) */
-    linear-gradient(180deg, rgba(148, 109, 74, 0.22), transparent)
-      0 var(--skirting-height) / 100% 22px no-repeat,
-    /* matte plank seams: simple straight vertical lines, no conic gradient */
-    repeating-linear-gradient(90deg,
+      rgba(95, 64, 31, 0.3) 82% 100%
+    ) top / 100% var(--skirting-height) no-repeat,
+    linear-gradient(
+      180deg,
+      rgba(148, 109, 74, 0.22),
+      transparent
+    ) 0 var(--skirting-height) / 100% 22px no-repeat,
+    repeating-linear-gradient(
+      90deg,
       transparent 0 88px,
       rgba(89, 62, 35, 0.26) 88px 89px,
-      transparent 89px 90px),
-    /* soft wood grain (very subtle, matte) */
+      transparent 89px 90px
+    ),
     var(--tex-wood) 0 0 / 240px 720px,
-    /* flat base colour — matches the top rail (pale pine) */
-    linear-gradient(180deg, #d4b48a 0%, #b8966a 55%, #9c7a4e 100%);
+    linear-gradient(
+      180deg,
+      #d4b48a 0%,
+      #b8966a 55%,
+      #9c7a4e 100%
+    );
 }
 
-/* ---- Top rail: a soft pale wooden batten the yarn hangs from.
-          Same pale pine as the floor. Sits just below the header. ---- */
 .top-rail {
   position: fixed;
-  top: var(--header-height); left: 0; right: 0;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
   height: var(--top-rail-height);
   background:
-    linear-gradient(180deg, rgba(255, 240, 210, 0.45) 0 1px, transparent 1px),
+    linear-gradient(
+      180deg,
+      rgba(255, 240, 210, 0.45) 0 1px,
+      transparent 1px
+    ),
     var(--tex-grain-dark) 0 0 / 160px 160px,
-    linear-gradient(180deg, #d4b48a 0%, #b8966a 55%, #9c7a4e 100%);
+    linear-gradient(
+      180deg,
+      #d4b48a 0%,
+      #b8966a 55%,
+      #9c7a4e 100%
+    );
   box-shadow:
     0 2px 3px rgba(80, 56, 24, 0.30),
     0 6px 12px -4px rgba(80, 56, 24, 0.25);

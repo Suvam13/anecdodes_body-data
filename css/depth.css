@@ -1,22 +1,4 @@
-/* ============================================================
-   depth.css — Three Z-layers for parallax-like depth
-   ------------------------------------------------------------
-   Each .hanger gets one of: .near / .mid / .far (assigned by
-   carousel.js at render time, weighted 25/50/25).
 
-   What each layer controls:
-     - --depth-scale:     multiplies card width/height
-     - --thread-len:      range of thread lengths (set by JS)
-     - --card-shadow:     normal + hover shadow (via .face)
-     - --card-haze:       atmospheric tint overlay (far only)
-     - --swing-amp:       swing rotation amplitude (used by swing.css)
-     - --hover-lift:      how far card lifts on hover
-
-   The .hanger.near/.mid/.far classes set the depth-local
-   variables; card.css and swing.css consume them via var().
-   ============================================================ */
-
-/* ---- Near layer (closest to viewer, ~25% of cards) ---- */
 .hanger.near {
   --depth-scale: var(--depth-near-scale);
   --card-shadow: var(--depth-near-shadow);
@@ -27,7 +9,6 @@
   z-index: 30;
 }
 
-/* ---- Mid layer (default, ~50% of cards) ---- */
 .hanger.mid {
   --depth-scale: var(--depth-mid-scale);
   --card-shadow: var(--depth-mid-shadow);
@@ -38,7 +19,6 @@
   z-index: 20;
 }
 
-/* ---- Far layer (distant, ~25% of cards) ---- */
 .hanger.far {
   --depth-scale: var(--depth-far-scale);
   --card-shadow: var(--depth-far-shadow);
@@ -49,9 +29,6 @@
   z-index: 10;
 }
 
-/* ---- Atmospheric haze overlay (only renders on .far cards) ---- */
-/* Sits on top of the card face, below the text. Tints distant
-   cards with a faint cream wash to suggest depth haze. */
 .hanger.far .face::after {
   content: '';
   position: absolute;
@@ -62,9 +39,7 @@
   z-index: 1;
 }
 
-/* ---- Mobile: scale down all depth layers proportionally ---- */
 @media (max-width: 700px) {
-  /* Near cards get a smaller bump on small screens */
   .hanger.near {
     --depth-near-scale: 1.08;
     --depth-near-thread-min: 140px;

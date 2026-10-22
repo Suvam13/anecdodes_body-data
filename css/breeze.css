@@ -1,39 +1,3 @@
-/* ============================================================
-   breeze.css — Sequential wave of card swings (not a uniform tilt)
-   ------------------------------------------------------------
-   Triggered by js/breeze.js, which adds the `.breeze` class to
-   `.row`. When active, each `.swing` element runs the `breeze`
-   keyframes — but with a delay proportional to its
-   `data-breeze-index`, so the gust appears to TRAVEL across
-   the row, hitting one card after another.
-
-   How it composes with the normal swing:
-     - The normal swing animation lives on .swing (defined in
-       card.css, keyframes in swing.css).
-     - When .row.breeze is active, we OVERRIDE that animation
-       with the breeze keyframes for the duration of the gust.
-     - Each .swing still has its own --swing-amp (set per depth
-       layer by depth.css), so near cards swing wider than far
-       cards even during the gust.
-     - After BREEZE_DURATION_MS, breeze.js removes the .breeze
-       class from .row; the .swing elements revert to their
-       normal infinite swing animation.
-
-   The per-card delay:
-     - --breeze-stagger (default 80ms) is the delay between
-       consecutive cards.
-     - A .swing with data-breeze-index="5" gets a delay of
-       5 × 80ms = 400ms, so the wave reaches it later than
-       card 0.
-
-   The gust profile (per card):
-     0%   → rest at 0deg
-     25%  → peak at +gust (card swings right as gust hits)
-     55%  → recoil to -gust/2 (slight overshoot backward)
-     80%  → small secondary wave at +gust/4
-     100% → back to 0deg
-   ============================================================ */
-
 @keyframes breeze {
   0%   { transform: rotate(0deg); }
   25%  { transform: rotate(var(--breeze-gust-angle)); }
@@ -42,17 +6,12 @@
   100% { transform: rotate(0deg); }
 }
 
-/* When .row has .breeze class, every .swing inside runs the gust
-   animation exactly once. Delay = data-breeze-index × --breeze-stagger,
-   so the wave travels across the row. */
 .row.breeze .swing {
   animation: breeze var(--breeze-duration) var(--breeze-easing) 1;
   animation-delay: calc(var(--breeze-stagger, 80ms) * var(--breeze-idx, 0));
   transform-origin: top center;
 }
 
-/* Per-card stagger index — set via inline style by JS based on
-   data-breeze-index. We use a CSS var so we can fall back to 0. */
 .swing {
   --breeze-idx: 0;
 }
@@ -69,7 +28,6 @@
 .swing[data-breeze-index="10"] { --breeze-idx: 10; }
 .swing[data-breeze-index="11"] { --breeze-idx: 11; }
 
-/* Respect reduced-motion preferences: skip the gust entirely */
 @media (prefers-reduced-motion: reduce) {
   .row.breeze .swing {
     animation: none;

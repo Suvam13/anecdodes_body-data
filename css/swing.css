@@ -1,22 +1,11 @@
-/* ============================================================
-   swing.css — Pendulum keyframes
-   ------------------------------------------------------------
-   The dangling swing animation applied to .hanger in card.css.
-   Kept separate so future animations (breeze, float, glow, etc.)
-   can live in their own files without bloating card.css.
-
-   How amplitude works:
-     - The keyframes use calc() with --swing-amp so each depth
-       layer can swing at a different amplitude.
-     - --swing-amp is set by depth.css:
-         .hanger.near → 2deg    (wider swing, closer to viewer)
-         .hanger.mid  → 1.4deg  (default)
-         .hanger.far  → 0.8deg  (subtler swing, distant)
-     - Fallback of 1.4deg if --swing-amp is unset (e.g. during
-       debugging when depth classes aren't applied).
-   ============================================================ */
+/* Pendulum swing animation for hanging cards. */
 
 @keyframes swing {
-  0%   { transform: rotate(calc(var(--swing-amp, 1.4deg) * -1)); }
-  100% { transform: rotate(var(--swing-amp, 1.4deg)); }
+  0% {
+    transform: rotate(calc(var(--swing-amp, 1.4deg) * -1));
+  }
+
+  100% {
+    transform: rotate(var(--swing-amp, 1.4deg));
+  }
 }

@@ -1,29 +1,4 @@
-/* ============================================================
-   card.css — Hanger, thread, pushpin, card, faces
-   ------------------------------------------------------------
-   Everything visual about a single card and its thread.
-   The hanger is the wrapper that swings (animation defined
-   in swing.css). The thread hangs off the hanger; the card
-   hangs off the thread.
 
-   Hierarchy:
-     .hanger          (flex column, swings; has .near/.mid/.far)
-       .thread        (the line + pushpin ::before + knot ::after)
-       .card          (flip container, preserve-3d; has .portrait/.note/.square)
-         .face.front  (English side)
-         .face.back   (Nepali side, rotated 180°)
-
-   Depth-aware properties (consume vars set by depth.css):
-     - --depth-scale:    multiplies card dimensions
-     - --card-shadow:    normal shadow on face
-     - --card-shadow-hover: shadow on hover
-     - --hover-lift:     how far card lifts on hover
-   ============================================================ */
-
-/* ---- Hanger (wrapper) ----
-   The hanger no longer swings — it's a static column containing
-   thread + swing wrapper + card. The pin stays put, the thread
-   stays put, only the card swings (via .swing below). */
 .hanger {
   display: flex;
   flex-direction: column;
@@ -31,10 +6,6 @@
   flex-shrink: 0;
 }
 
-/* ---- Swing wrapper (rotates with the pendulum motion) ----
-   Sits between the thread (above) and the card (below).
-   Pivot is at the TOP (where the knot is), so the card swings
-   beneath a stationary thread — like a real card on a string. */
 .swing {
   display: flex;
   flex-direction: column;
@@ -45,12 +16,9 @@
   will-change: transform;
 }
 
-/* ---- Thread (the line) ---- */
 .thread {
   width: var(--thread-width);
   height: var(--thread-len, var(--thread-default-len));
-  /* Base thread color + a thin highlight stripe on the left edge
-     (light catching the thread from upper-left) */
   background:
     linear-gradient(
       90deg,
@@ -59,14 +27,15 @@
       transparent var(--thread-highlight-width),
       transparent 100%
     ),
-    linear-gradient(180deg,
+    linear-gradient(
+      180deg,
       var(--thread-color-top) 0%,
-      var(--thread-color-bottom) 100%);
+      var(--thread-color-bottom) 100%
+    );
   margin: 0 auto;
   position: relative;
 }
 
-/* Pushpin at top of thread (where it meets the ceiling) */
 .thread::before {
   content: '';
   position: absolute;
@@ -76,11 +45,17 @@
   width: var(--pushpin-size);
   height: var(--pushpin-size);
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #aaa 0%, #555 40%, #2a2a2a 100%);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 -1px 1px rgba(0, 0, 0, 0.4);
+  background: radial-gradient(
+    circle at 30% 30%,
+    #aaa 0%,
+    #555 40%,
+    #2a2a2a 100%
+  );
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.4);
 }
 
-/* Knot at bottom of thread (where it ties to the card) */
 .thread::after {
   content: '';
   position: absolute;
@@ -94,10 +69,6 @@
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 }
 
-/* ---- Card (flip container) ---- */
-/* Width/height are now depth-aware: base size × ratio variant × depth scale.
-   The calc() multiplies three values together so any combination works:
-   e.g. a .card.note inside .hanger.near = 180 × 1.05 × 1.15 = 217px wide */
 .card {
   width: calc(var(--card-width) * var(--ratio-w, 1) * var(--depth-scale, 1));
   height: calc(var(--card-height) * var(--ratio-h, 1) * var(--depth-scale, 1));
@@ -111,31 +82,30 @@
     translate var(--hover-lift-duration) var(--hover-lift-easing);
   border-radius: var(--card-radius);
 }
-.card.flipped { transform: rotateY(180deg); }
 
-/* Hover lift — card rises toward viewer (translateZ) + shadow deepens.
-   Lift distance comes from --hover-lift (set by depth.css per layer). */
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
 .card:hover {
   translate: 0 0 var(--hover-lift, 8px);
 }
 
-/* ---- Card size variants (three aspect ratios) ---- */
-/* --ratio-w and --ratio-h are consumed by .card's width/height calc above.
-   carousel.js assigns one of these classes per card. */
 .card.portrait {
   --ratio-w: var(--ratio-portrait-w);
   --ratio-h: var(--ratio-portrait-h);
 }
+
 .card.note {
   --ratio-w: var(--ratio-note-w);
   --ratio-h: var(--ratio-note-h);
 }
+
 .card.square {
   --ratio-w: var(--ratio-square-w);
   --ratio-h: var(--ratio-square-h);
 }
 
-/* ---- Card face (shared by front and back) ---- */
 .face {
   position: absolute;
   inset: 0;
@@ -149,14 +119,12 @@
   align-items: center;
   text-align: center;
   overflow: hidden;
-  /* Directional shadow (light from upper-left → shadow falls down-right).
-     Offset by --shadow-offset-x/y; blur+color come from --card-shadow
-     (which is set per depth layer by depth.css). */
   box-shadow:
     var(--shadow-offset-x) var(--shadow-offset-y) var(--card-shadow, 0 10px 18px rgba(0, 0, 0, 0.18)),
     inset 0 0 0 1px rgba(255, 255, 255, 0.18),
     inset 0 0 0 2px rgba(0, 0, 0, 0.04);
 }
+
 .card:hover .face {
   box-shadow:
     var(--shadow-offset-x) var(--shadow-offset-y) var(--card-shadow-hover, 0 16px 28px rgba(0, 0, 0, 0.26)),
@@ -164,7 +132,6 @@
     inset 0 0 0 2px rgba(0, 0, 0, 0.04);
 }
 
-/* Paper texture overlay (sits on top of bg, under text, under haze) */
 .face::before {
   content: '';
   position: absolute;
@@ -178,55 +145,60 @@
   z-index: 0;
 }
 
-/* Ensure text content sits above ::before (texture) and ::after (haze) */
 .face > * {
   position: relative;
   z-index: 2;
 }
 
-/* ---- Front face (English) ---- */
 .face.front {
   background: var(--card-color);
   color: var(--card-text-front);
 }
+
 .face.front .lang-label {
   position: absolute;
-  top: 11px; left: 13px;
+  top: 11px;
+  left: 13px;
   font-size: var(--lang-label-size);
   letter-spacing: 2px;
   text-transform: uppercase;
   opacity: 0.55;
   font-weight: 600;
 }
+
 .face.front .num {
   position: absolute;
-  top: 11px; right: 13px;
+  top: 11px;
+  right: 13px;
   font-size: var(--num-size);
   opacity: 0.45;
   letter-spacing: 1px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
+
 .face.front .quote {
   font-family: var(--font-script);
-  /* Font size scales with card height: base × size-variant ratio × depth multiplier,
-     clamped to [13px, 26px] so small cards stay readable and large cards don't
-     get cartoonishly huge. Subsumes the old --depth-far-text-scale rule. */
-  font-size: clamp(13px,
-                   calc(var(--face-front-font-size) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-                   26px);
-  /* Line-height scales the same way, clamped to [1.05, 1.3] so small cards
-     fit more lines without overlapping and large cards don't get too airy. */
-  line-height: clamp(1.05,
-                     calc(var(--face-front-line-height) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-                     1.3);
+  font-size: clamp(
+    13px,
+    calc(var(--face-front-font-size) * var(--ratio-h, 1) * var(--depth-scale, 1)),
+    26px
+  );
+  line-height: clamp(
+    1.05,
+    calc(var(--face-front-line-height) * var(--ratio-h, 1) * var(--depth-scale, 1)),
+    1.3
+  );
   font-weight: 600;
   max-width: 92%;
   color: var(--card-text-front-quote);
 }
+
 .face.front .hint {
   position: absolute;
-  bottom: 11px; left: 0; right: 0;
+  bottom: 11px;
+  left: 0;
+  right: 0;
   font-size: var(--hint-size);
   opacity: 0.42;
   letter-spacing: 1.5px;
@@ -234,50 +206,56 @@
   font-weight: 500;
 }
 
-/* ---- Back face (Nepali) ---- */
 .face.back {
   background: var(--card-color-back);
   color: var(--card-text-back);
   transform: rotateY(180deg);
 }
+
 .face.back .lang-label {
   position: absolute;
-  top: 11px; right: 13px;
+  top: 11px;
+  right: 13px;
   font-size: var(--lang-label-size);
   letter-spacing: 2px;
   text-transform: uppercase;
   opacity: 0.55;
   font-weight: 600;
 }
+
 .face.back .num {
   position: absolute;
-  top: 11px; left: 13px;
+  top: 11px;
+  left: 13px;
   font-size: var(--num-size);
   opacity: 0.45;
   letter-spacing: 1px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
+
 .face.back .quote {
   font-family: var(--font-devanagari);
-  /* Same scaling system as the front face, with Nepali-appropriate clamps.
-     Floor is 11px (Nepali script needs slightly larger minimum than English
-     due to matras above/below letters). Ceiling is 18px. */
-  font-size: clamp(11px,
-                   calc(var(--face-back-font-size) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-                   18px);
-  /* Line-height clamped to [1.2, 1.9] — Nepali needs more vertical room
-     than English, so the floor is higher (1.2 vs 1.05). */
-  line-height: clamp(1.2,
-                     calc(var(--face-back-line-height) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-                     1.9);
+  font-size: clamp(
+    11px,
+    calc(var(--face-back-font-size) * var(--ratio-h, 1) * var(--depth-scale, 1)),
+    18px
+  );
+  line-height: clamp(
+    1.2,
+    calc(var(--face-back-line-height) * var(--ratio-h, 1) * var(--depth-scale, 1)),
+    1.9
+  );
   font-weight: 500;
   max-width: 94%;
   color: var(--card-text-back);
 }
+
 .face.back .hint {
   position: absolute;
-  bottom: 11px; left: 0; right: 0;
+  bottom: 11px;
+  left: 0;
+  right: 0;
   font-size: var(--hint-size);
   opacity: 0.42;
   letter-spacing: 1.5px;
@@ -285,36 +263,46 @@
   font-weight: 500;
 }
 
-/* ---- Mobile ---- */
 @media (max-width: 700px) {
-  /* Override base card dimensions; depth-scale & ratio still multiply on top */
   .card {
     --card-width: var(--card-width-mobile);
     --card-height: var(--card-height-mobile);
   }
+
   .face {
     padding: var(--card-padding-mobile);
   }
-  /* Mobile: same scaling system, but with mobile base font sizes.
-     The clamp floors come down slightly to match the smaller mobile base. */
+
   .face.front .quote {
-    font-size: clamp(11px,
-                     calc(var(--face-front-font-size-mobile) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-                     22px);
-    line-height: clamp(1.05,
-                       calc(var(--face-front-line-height) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-                       1.3);
+    font-size: clamp(
+      11px,
+      calc(var(--face-front-font-size-mobile) * var(--ratio-h, 1) * var(--depth-scale, 1)),
+      22px
+    );
+    line-height: clamp(
+      1.05,
+      calc(var(--face-front-line-height) * var(--ratio-h, 1) * var(--depth-scale, 1)),
+      1.3
+    );
   }
+
   .face.back .quote {
-    font-size: clamp(10px,
-                     calc(var(--face-back-font-size-mobile) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-                     16px);
-    line-height: clamp(1.2,
-                       calc(var(--face-back-line-height) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-                       1.9);
+    font-size: clamp(
+      10px,
+      calc(var(--face-back-font-size-mobile) * var(--ratio-h, 1) * var(--depth-scale, 1)),
+      16px
+    );
+    line-height: clamp(
+      1.2,
+      calc(var(--face-back-line-height) * var(--ratio-h, 1) * var(--depth-scale, 1)),
+      1.9
+    );
   }
-  .face.front .lang-label, .face.back .lang-label,
-  .face.front .num, .face.back .num {
+
+  .face.front .lang-label,
+  .face.back .lang-label,
+  .face.front .num,
+  .face.back .num {
     font-size: var(--lang-label-size-mobile);
   }
 }

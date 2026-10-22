@@ -1,9 +1,3 @@
-/* ============================================================
-   footer.css — Footer hint pill
-   ------------------------------------------------------------
-   The small floating "Scroll horizontally · Tap to flip" hint.
-   ============================================================ */
-
 .footer-hint {
   position: fixed;
   bottom: var(--footer-bottom);
@@ -23,7 +17,7 @@
   white-space: nowrap;
 }
 
-/* ---- Mobile ---- */
+/*  Responsive */
 @media (max-width: 700px) {
   .footer-hint {
     font-size: var(--footer-font-size-mobile);
