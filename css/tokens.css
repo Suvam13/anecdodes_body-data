@@ -79,11 +79,13 @@
   --footer-bottom-mobile: 14px;
   --footer-font-size-mobile: 12px;
 
-  --spotlight-color: rgba(255, 249, 230, 0.92);
+
+  --spotlight-color: rgba(255, 252, 243, 0.95);
   --spotlight-x: 50%;
-  --spotlight-y: -24%;
+  --spotlight-y: 0%;
   --spotlight-width: 70%;
   --spotlight-height: 70%;
+
 
   --window-glow: rgba(255, 244, 214, 0.55);
 

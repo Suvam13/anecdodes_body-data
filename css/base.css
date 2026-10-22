@@ -12,6 +12,8 @@ html, body {
   overflow: hidden;
 }
 
+
+
 html {
   background-color: var(--wall-base);
   background-image:
@@ -19,31 +21,20 @@ html {
       ellipse var(--spotlight-width) var(--spotlight-height)
       at var(--spotlight-x) var(--spotlight-y),
       var(--spotlight-color),
-      transparent
+      transparent 100%
     ),
     radial-gradient(
       ellipse 34% 46% at 92% 32%,
       var(--window-glow),
       transparent 72%
     ),
-    radial-gradient(
-      ellipse 60% 55% at -6% 100%,
-      var(--wall-edge-color),
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 60% 55% at 106% 100%,
-      var(--wall-edge-color),
-      transparent 70%
-    ),
-    var(--tex-clouds) 0 0 / 640px 640px,
-    var(--tex-plaster) 0 0 / 200px 200px,
     linear-gradient(
       180deg,
       var(--bg-base-top) 0%,
       var(--bg-base-bottom) 100%
     );
 }
+
 
 html::after {
   content: "";
