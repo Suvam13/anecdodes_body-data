@@ -1,12 +1,77 @@
 /* ============================================================
-   header.css — Reserved for future header
+   header.css — Site header (title + description)
    ------------------------------------------------------------
-   Currently empty. When you add a header bar (title, logo,
-   navigation, etc.), put its styles here.
+   Sits at the top of the gallery wall, above the wooden rail.
+   The rail (top-rail in base.css) is positioned at
+   top: var(--header-height), so it hangs just below this header.
 
-   Suggested token additions to add to tokens.css when the
-   time comes:
-     --header-height
-     --header-bg
-     --header-text
+   Layout: TITLE on the LEFT, DESCRIPTION on the RIGHT — both
+   vertically centered, separated by space-between.
+
+   Tokens (defined in tokens.css):
+     --header-height        reserved vertical space
+     --header-title-size    title font size
+     --header-desc-size     description font size
+     --header-title-color   title text color
+     --header-desc-color    description text color
+     --header-accent        the wavy underline color (orange)
+     --header-pad-x         side padding for title/desc
    ============================================================ */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  display: flex;
+  flex-direction: row;            /* side by side: title left, desc right */
+  align-items: center;            /* vertically centered */
+  justify-content: center;        /* center the title+desc group */
+  gap: 40px;                      /* space between title and description */
+  z-index: 60;
+  pointer-events: none;           /* let drags/clicks pass through to the stage */
+  padding: 0 var(--header-pad-x);
+}
+
+/* ---- Title (left side) ---- */
+.site-title {
+  font-family: var(--font-script);
+  font-size: var(--header-title-size);
+  color: var(--header-title-color);
+  font-weight: 700;
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+}
+
+/* Wavy underline accent (inline SVG sine wave in --header-accent color) */
+.site-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 75%;
+  height: 7px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8' preserveAspectRatio='none'%3E%3Cpath d='M0 4 Q 12.5 0 25 4 T 50 4 T 75 4 T 100 4' stroke='%23ff8a12' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+}
+
+/* ---- Description (right side) ---- */
+.site-desc {
+  font-family: var(--font-body);
+  font-size: var(--header-desc-size);
+  color: var(--header-desc-color);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  text-align: right;
+  max-width: 50%;                  
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 700px) {
+  .site-title::after {
+    bottom: -6px;
+    height: 5px;
+  }
+}

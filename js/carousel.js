@@ -51,11 +51,11 @@ const CONFIG = {
   // THREAD_MIN/THREAD_RANGE so each depth layer has its own believable
   // thread length: near cards hang lower (longer threads), far cards
   // appear higher up (shorter threads).
-  // All ranges bumped up so cards hang lower overall.
+  // SHORTENED to compensate for the header taking vertical space at the top.
   THREAD_RANGES: {
-    near: { min: 280, max: 360 },
-    mid:  { min: 150, max: 260 },
-    far:  { min: 80,  max: 140 },
+    near: { min: 90, max: 150 },
+    mid:  { min: 100,  max: 160 },
+    far:  { min: 110,  max: 170 },
   },
 
   // Sine-wave placement — produces smooth, organic variation across the

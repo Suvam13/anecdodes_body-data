@@ -3,19 +3,13 @@
    ------------------------------------------------------------
    Global concerns only. No component-specific styles.
 
-   The room is built from five layers, back to front:
-     1. html            cream plaster wall: overhead light, window
-                        glow, shaded corners, mottling + fine grain
-     2. html::before    out-of-focus gallery: dark curtain + blurred
-                        coloured posters (like the photos' background)
-     3. html::after     wooden floor + skirting board, with coloured
-                        light bouncing off the cards
-     4. (the stage)     threads and cards
-     5. body::after     photographic finish over everything:
-                        darkened corners + film grain
-                        (pointer-events: none, so clicks pass through)
+   The room is built from three layers, back to front:
+     1. html        cream plaster wall: overhead light, window
+                    glow, shaded corners, mottling + fine grain
+     2. html::after matte wooden floor + skirting board
+     3. (the stage) threads and cards
 
-   The grain/fibre/wood/doodle textures are inline SVG noise defined
+   The grain/fibre/wood textures are inline SVG noise defined
    as --tex-* tokens in tokens.css, so there are no image files.
    ============================================================ */
 
@@ -54,38 +48,9 @@ html {
     linear-gradient(180deg, var(--bg-base-top) 0%, var(--bg-base-bottom) 100%);
 }
 
-/* ---- 2. Out-of-focus gallery: dark curtain on the far left and blurred
-          coloured posters. Static, so the blur is only painted once. ---- */
-html::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -3;
-  pointer-events: none;
-  opacity: 0.6;
-  filter: blur(6px);
-  background:
-    /* curtain */
-    linear-gradient(90deg, rgba(28, 20, 17, 0.95) 0, rgba(28, 20, 17, 0.88) 3vw, rgba(28, 20, 17, 0) 8vw)
-      0 0 / 100% 100% no-repeat,
-    /* left cluster */
-    linear-gradient(#d4392e, #d4392e) 15% 36% / 12vw 22vh no-repeat,
-    linear-gradient(#8a5fc8, #8a5fc8) 25% 60% / 8vw 14vh no-repeat,
-    linear-gradient(#2eb6c8, #2eb6c8) 9% 64% / 7vw 11vh no-repeat,
-    linear-gradient(#f9dc2d, #f9dc2d) 27% 28% / 6vw 9vh no-repeat,
-    /* right cluster */
-    linear-gradient(#d4392e, #d4392e) 80% 32% / 11vw 20vh no-repeat,
-    linear-gradient(#f58a1d, #f58a1d) 92% 54% / 7vw 12vh no-repeat,
-    linear-gradient(#8a5fc8, #8a5fc8) 70% 62% / 9vw 14vh no-repeat,
-    linear-gradient(#2eb6c8, #2eb6c8) 87% 22% / 6vw 9vh no-repeat,
-    linear-gradient(#f9dc2d, #f9dc2d) 97% 40% / 5vw 8vh no-repeat,
-    /* pale posters in the middle so the wall is never bare */
-    linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.55)) 44% 40% / 9vw 14vh no-repeat,
-    linear-gradient(rgba(190, 175, 150, 0.45), rgba(190, 175, 150, 0.45)) 58% 52% / 7vw 11vh no-repeat;
-}
-
-/* ---- 3. Floor: boards running toward a vanishing point above the floor,
-          a skirting board, and coloured light bouncing off the cards ---- */
+/* ---- 2. Floor: MATTE pale boards with a skirting board.
+          Same colour family as the top rail for visual consistency.
+          Just flat colour + soft grain + subtle vertical plank seams. ---- */
 html::after {
   content: "";
   position: fixed;
@@ -100,51 +65,34 @@ html::after {
     linear-gradient(180deg,
       var(--skirting-light) 0 62%,
       var(--skirting-shade) 62% 82%,
-      rgba(40, 24, 10, 0.45) 82% 100%) top / 100% var(--skirting-height) no-repeat,
-    /* shadow the skirting casts on the floor */
-    linear-gradient(180deg, rgba(30, 18, 8, 0.38), transparent)
-      0 var(--skirting-height) / 100% 26px no-repeat,
-    /* coloured light bouncing from the cards */
-    radial-gradient(ellipse 18% 60% at 22% 8%, rgba(255, 150, 55, 0.22), transparent),
-    radial-gradient(ellipse 18% 60% at 50% 8%, rgba(150, 100, 210, 0.16), transparent),
-    radial-gradient(ellipse 18% 60% at 78% 8%, rgba(60, 190, 205, 0.18), transparent),
-    /* light pooling on the boards */
-    radial-gradient(ellipse 70% 90% at 50% 0%, rgba(255, 243, 214, 0.38), transparent 75%),
-    /* plank seams */
-    repeating-conic-gradient(at 50% -140%,
-      transparent 0deg 3.4deg,
-      rgba(45, 25, 8, 0.20) 3.4deg 3.6deg,
-      rgba(255, 232, 190, 0.10) 3.6deg 4deg),
-    /* wood grain + base colour */
+      rgba(95, 64, 31, 0.3) 82% 100%) top / 100% var(--skirting-height) no-repeat,
+    /* soft shadow the skirting casts on the floor (matte, not glossy) */
+    linear-gradient(180deg, rgba(148, 109, 74, 0.22), transparent)
+      0 var(--skirting-height) / 100% 22px no-repeat,
+    /* matte plank seams: simple straight vertical lines, no conic gradient */
+    repeating-linear-gradient(90deg,
+      transparent 0 88px,
+      rgba(89, 62, 35, 0.26) 88px 89px,
+      transparent 89px 90px),
+    /* soft wood grain (very subtle, matte) */
     var(--tex-wood) 0 0 / 240px 720px,
-    linear-gradient(180deg, var(--floor-color-top), var(--floor-color-bottom));
+    /* flat base colour — matches the top rail (pale pine) */
+    linear-gradient(180deg, #d4b48a 0%, #b8966a 55%, #9c7a4e 100%);
 }
 
-/* ---- 5. Photographic finish: darkened corners + film grain ---- */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  pointer-events: none;
-  opacity: 0.4;
-  background:
-    radial-gradient(ellipse 125% 105% at 50% 42%, transparent 52%, var(--vignette-color) 100%),
-    var(--tex-grain-dark) 0 0 / 160px 160px;
-}
-
-/* ---- Top rail: a wooden batten the yarn hangs from ---- */
+/* ---- Top rail: a soft pale wooden batten the yarn hangs from.
+          Same pale pine as the floor. Sits just below the header. ---- */
 .top-rail {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: var(--header-height); left: 0; right: 0;
   height: var(--top-rail-height);
   background:
-    linear-gradient(180deg, rgba(255, 230, 190, 0.38) 0 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 240, 210, 0.45) 0 1px, transparent 1px),
     var(--tex-grain-dark) 0 0 / 160px 160px,
-    linear-gradient(180deg, #86633f 0%, #654528 55%, #46301a 100%);
+    linear-gradient(180deg, #d4b48a 0%, #b8966a 55%, #9c7a4e 100%);
   box-shadow:
-    0 2px 3px rgba(40, 24, 8, 0.45),
-    0 9px 14px -4px rgba(40, 24, 8, 0.40);
+    0 2px 3px rgba(80, 56, 24, 0.30),
+    0 6px 12px -4px rgba(80, 56, 24, 0.25);
   z-index: 50;
   pointer-events: none;
 }
