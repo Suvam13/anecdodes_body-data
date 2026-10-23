@@ -1,196 +1,188 @@
+/* Design tokens
+   All colors, sizes, fonts, and textures live here.
+   Grouped by concern, alphabetized within each group.
+*/
 
 :root {
-  --bg-base-top: #f7efe0;
-  --bg-base-bottom: #dac9a9;
-  --bg-glow-top: #fff6dcb0;
-  --bg-glow-bottom: #f2c9a0;
-  --text-color: #372e18;
-  --wall-base: #eadfca;
 
-  --card-color: #34d048;
-  --card-color-back: #22b839;
-  --card-text-front: #1f1c14;
-  --card-text-front-quote: #1a1710;
-  --card-text-back: #14110a;
-
-  --top-rail-height: 14px;
-  --top-rail-color: rgba(49, 60, 40, 0.18);
-
-  --header-height: 72px;
-  --header-title-size: 42px;
-  --header-desc-size: 14px;
-  --header-title-color: #3a2c18;
-  --header-desc-color: rgba(55, 46, 24, 0.78);
-  --header-accent: #ff8a12;
-  --header-pad-x: 48px;
-
-  --stage-padding-top: calc(var(--header-height) + var(--top-rail-height));
-  --stage-padding-bottom: 24px;
-  --stage-perspective: 2200px;
-
-  --row-gap: 90px;
-  --row-padding-x: 60px;
-
-  --card-width: 150px;
-  --card-height: 248px;
-  --card-radius: 2px;
-  --card-padding: 26px 18px 24px;
-  --card-flip-duration: 0.85s;
-  --card-flip-easing: cubic-bezier(0.45, 0.05, 0.2, 1);
-
-  --thread-width: 1.6px;
-  --thread-color-top: rgba(40, 32, 24, 0.75);
-  --thread-color-bottom: rgba(40, 32, 24, 0.4);
-  --thread-default-len: 160px;
-
-  --pushpin-size: 7px;
-
-  --knot-size: 5px;
-  --knot-color: #2a241c;
-
-  --font-body: 'Inter', sans-serif;
-  --font-script: 'Caveat', cursive;
-  --font-devanagari: 'Noto Sans Devanagari', sans-serif;
-
-  --face-front-font-size: 22px;
-  --face-front-line-height: 1.15;
-  --face-back-font-size: 15px;
-  --face-back-line-height: 1.7;
-  --lang-label-size: 9px;
-  --num-size: 10px;
-  --hint-size: 13px;
-
-  --footer-bottom: 18px;
-  --footer-font-size: 14px;
-  --footer-bg: #f7f0df;
-  --footer-text: #3d352b;
-
-  --mobile-breakpoint: 700px;
-
-  --card-width-mobile: 115px;
-  --card-height-mobile: 200px;
-  --card-padding-mobile: 20px 14px 18px;
-  --face-front-font-size-mobile: 18px;
-  --face-back-font-size-mobile: 13px;
-  --lang-label-size-mobile: 8px;
-  --num-size-mobile: 9px;
-  --row-gap-mobile: 50px;
-  --row-padding-x-mobile: 30px;
-  --footer-bottom-mobile: 14px;
-  --footer-font-size-mobile: 12px;
+  --wall-base:   #FFDDDD;   
+  --wall-top:    #FFECC8;   
+  --wall-bottom: #c4b292;   
 
 
-  --spotlight-color: rgba(255, 252, 243, 0.95);
+  /* Spotlight (warm overhead light from the top-center) */
+  --spotlight-color: #fffefa;  
   --spotlight-x: 50%;
   --spotlight-y: 0%;
-  --spotlight-width: 70%;
-  --spotlight-height: 70%;
+  --spotlight-width:  75%;
+  --spotlight-height: 55%;  /* extends past viewport so the ellipse edge is off-screen, preventing a hard rim */
 
-
-  --window-glow: rgba(255, 244, 214, 0.55);
-
-  --wall-edge-color: rgba(120, 88, 52, 0.20);
-
-  --floor-color-top: #a89070;
-  --floor-color-bottom: #8a7458;
-  --floor-height: 14vh;
-
+  /* Floor (wooden baseboard + skirting strip) */
+  --floor-height:    14vh;
   --skirting-height: 12px;
-  --skirting-light: #e8e0d2;
-  --skirting-shade: #c8bba6;
+  --skirting-light:  #b8966a;   /* matches floor mid-tone — blends into wood */
+  --skirting-shade:  #9c7a4e;   /* matches floor bottom — darker shading */
 
-  --horizon-color: rgba(50, 32, 14, 0.25);
-  --horizon-blur: 2px;
+  /* Header  */
+  --header-height:      72px;
+  --header-title-size:  42px;
+  --header-desc-size:   14px;
+  --header-title-color: #3a2c18;
+  --header-desc-color:  rgba(55, 46, 24, 0.78);
+  --header-accent:      #ff8a12;
+  --header-pad-x:       48px;
 
-  --vignette-color: rgba(78, 48, 22, 0.62);
+  /* Top rail (picture-rail strip under the header) */
+  --top-rail-height: 14px;
 
-  --depth-near-scale: 1.15;
-  --depth-near-thread-min: 220px;
-  --depth-near-thread-max: 280px;
-  --depth-near-shadow: 10px 22px 26px -8px rgba(74, 44, 18, 0.38),
-                       3px 6px 8px rgba(74, 44, 18, 0.22);
-  --depth-near-shadow-hover: 14px 32px 38px -10px rgba(74, 44, 18, 0.46),
-                             4px 10px 14px rgba(74, 44, 18, 0.26);
-  --depth-near-haze: none;
-  --depth-near-swing-amp: 2deg;
-  --depth-near-hover-lift: 14px;
+  /* Stage (perspective container for hanging cards) */
+  --stage-padding-top:    calc(var(--header-height) + var(--top-rail-height));
+  --stage-padding-bottom: 24px;
+  --stage-perspective:    2200px;
 
-  --depth-mid-scale: 1.0;
-  --depth-mid-thread-min: 100px;
-  --depth-mid-thread-max: 200px;
-  --depth-mid-shadow: 7px 15px 18px -7px rgba(74, 44, 18, 0.30),
-                      2px 4px 6px rgba(74, 44, 18, 0.16);
-  --depth-mid-shadow-hover: 10px 24px 28px -9px rgba(74, 44, 18, 0.38),
-                            3px 7px 10px rgba(74, 44, 18, 0.20);
-  --depth-mid-haze: none;
-  --depth-mid-swing-amp: 1.4deg;
-  --depth-mid-hover-lift: 10px;
+  /* Row (horizontal flex of hangers) */
+  --row-gap:       90px;
+  --row-padding-x: 60px;
 
-  --depth-far-scale: 0.88;
-  --depth-far-thread-min: 80px;
-  --depth-far-thread-max: 140px;
-  --depth-far-shadow: 4px 8px 10px -4px rgba(74, 44, 18, 0.18),
-                      1px 2px 3px rgba(74, 44, 18, 0.10);
-  --depth-far-shadow-hover: 6px 14px 16px -6px rgba(74, 44, 18, 0.26),
-                            2px 4px 6px rgba(74, 44, 18, 0.14);
-  --depth-far-haze: rgba(245, 235, 215, 0.03);
-  --depth-far-swing-amp: 0.8deg;
-  --depth-far-hover-lift: 6px;
+  /* Card */
+  --card-width:          150px;
+  --card-height:         248px;
+  --card-radius:         2px;
+  --card-padding:        26px 18px 24px;
+  --card-flip-duration:  0.85s;
+  --card-flip-easing:    cubic-bezier(0.45, 0.05, 0.2, 1);
 
-  --shadow-offset-x: 6px;
-  --shadow-offset-y: 14px;
+  /* Card colors */
+  --card-color:           #34d048;
+  --card-color-back:      #22b839;
+  --card-text-front:      #1f1c14;
+  --card-text-front-quote:#1a1710;
+  --card-text-back:       #14110a;
 
-  --ratio-portrait-w: 1.0;
-  --ratio-portrait-h: 1.0;
-
-  --ratio-note-w: 1.05;
-  --ratio-note-h: 0.84;
-
-  --ratio-square-w: 0.92;
-  --ratio-square-h: 0.67;
-
+  /* Thread (the string hanging each card) */
+  --thread-width:           1.6px;
+  --thread-color-top:       rgba(40, 32, 24, 0.75);
+  --thread-color-bottom:    rgba(40, 32, 24, 0.4);
+  --thread-default-len:     160px;
   --thread-highlight-color: rgba(255, 245, 220, 0.35);
   --thread-highlight-width: 0.5px;
 
+  /* Pushpin (top of thread) and knot (bottom of thread) */
+  --pushpin-size: 7px;
+  --knot-size:    5px;
+  --knot-color:   #2a241c;
+
+  /*  Typography */
+  --text-color:        #372e18;
+  --font-body:         'Inter', sans-serif;
+  --font-script:       'Caveat', cursive;
+  --font-devanagari:   'Noto Sans Devanagari', sans-serif;
+
+  /* Card face typography */
+  --face-front-font-size:   22px;
+  --face-front-line-height: 1.15;
+  --face-back-font-size:    15px;
+  --face-back-line-height:  1.7;
+  --lang-label-size:        9px;
+  --num-size:               10px;
+  --hint-size:              13px;
+
+  /* Footer hint */
+  --footer-bottom:     18px;
+  --footer-font-size:  14px;
+  --footer-bg:         #f7f0df;
+  --footer-text:       #3d352b;
+
+  /* Card shadow offsets (shared across depth tiers) */
+  --shadow-offset-x: 6px;
+  --shadow-offset-y: 14px;
+
+  /* Depth tiers (near / mid / far cards) */
+  --depth-near-scale:        1.15;
+  --depth-near-shadow:       10px 22px 26px -8px rgba(74, 44, 18, 0.38),
+                             3px 6px 8px rgba(74, 44, 18, 0.22);
+  --depth-near-shadow-hover: 14px 32px 38px -10px rgba(74, 44, 18, 0.46),
+                             4px 10px 14px rgba(74, 44, 18, 0.26);
+  --depth-near-haze:         none;
+  --depth-near-swing-amp:    2deg;
+  --depth-near-hover-lift:   14px;
+
+  --depth-mid-scale:         1.0;
+  --depth-mid-shadow:        7px 15px 18px -7px rgba(74, 44, 18, 0.30),
+                             2px 4px 6px rgba(74, 44, 18, 0.16);
+  --depth-mid-shadow-hover: 10px 24px 28px -9px rgba(74, 44, 18, 0.38),
+                             3px 7px 10px rgba(74, 44, 18, 0.20);
+  --depth-mid-haze:          none;
+  --depth-mid-swing-amp:     1.4deg;
+  --depth-mid-hover-lift:    10px;
+
+  --depth-far-scale:         0.88;
+  --depth-far-shadow:        4px 8px 10px -4px rgba(74, 44, 18, 0.18),
+                             1px 2px 3px rgba(74, 44, 18, 0.10);
+  --depth-far-shadow-hover:  6px 14px 16px -6px rgba(74, 44, 18, 0.26),
+                             2px 4px 6px rgba(74, 44, 18, 0.14);
+  --depth-far-haze:          rgba(245, 235, 215, 0.03);
+  --depth-far-swing-amp:     0.8deg;
+  --depth-far-hover-lift:     6px;
+
+  /* Card aspect ratios (ratio-w / ratio-h multiply card-size) */
+  --ratio-portrait-w: 1.0;
+  --ratio-portrait-h: 1.0;
+  --ratio-note-w:     1.05;
+  --ratio-note-h:     0.84;
+  --ratio-square-w:   0.92;
+  --ratio-square-h:   0.67;
+
+  /* Hover lift animation */
   --hover-lift-duration: 0.35s;
-  --hover-lift-easing: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --hover-lift-easing:   cubic-bezier(0.2, 0.7, 0.3, 1);
 
-  --breeze-duration: 4s;
-  --breeze-gust-angle: 3.5deg;
-  --breeze-easing: cubic-bezier(0.45, 0.05, 0.55, 0.95);
-  --breeze-stagger: 90ms;
+  /* Breeze animation */
+  --breeze-duration:    4s;
+  --breeze-gust-angle:  3.5deg;
+  --breeze-easing:      cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  --breeze-stagger:     90ms;
 
-  --auto-scroll-speed: 22px;
+  /* Auto-scroll behavior */
+  --auto-scroll-speed:   22px;
   --auto-scroll-pause-ms: 3500;
 
+  /* Textures (inline SVG noise patterns) */
   --tex-grain-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .12 0 0 0 0 .08 0 0 0 0 .04 0 0 0 .65 -.27'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-
   --tex-grain-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .97 0 0 0 0 .9 0 0 0 .65 -.28'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
-
-  --tex-fibers: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7 .09' numOctaves='3' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .99 0 0 0 0 .95 0 0 0 .9 -.48'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
-
-  --tex-plaster: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3' seed='6' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .3 0 0 0 0 .16 0 0 0 .45 -.17'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
-
-  --tex-clouds: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='n' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='4' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .36 0 0 0 0 .2 0 0 0 .38 -.09'/%3E%3C/filter%3E%3Crect width='640' height='640' filter='url(%23n)'/%3E%3C/svg%3E");
-
   --tex-wood: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='720'%3E%3Cfilter id='n' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.3 .005' numOctaves='4' seed='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .24 0 0 0 0 .12 0 0 0 0 .04 .8 0 0 0 -.36'/%3E%3C/filter%3E%3Crect width='240' height='720' filter='url(%23n)'/%3E%3C/svg%3E");
 
-  --tex-doodle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150' fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round' opacity='.3'%3E%3Cpath d='M10 34Q32 14 54 34Q32 54 10 34Z'/%3E%3Ccircle cx='32' cy='34' r='7'/%3E%3Ccircle cx='32' cy='34' r='2.4' fill='black'/%3E%3Cpath d='M20 20l-3-5M32 16v-6M44 20l3-5'/%3E%3Cpath d='M92 22q0-12 12-12t12 10q0 8-9 11-3 2-3 8'/%3E%3Ccircle cx='104' cy='56' r='1.4' fill='black'/%3E%3Crect x='84' y='88' width='34' height='20' rx='3'/%3E%3Ccircle cx='101' cy='98' r='6'/%3E%3Ccircle cx='101' cy='98' r='2'/%3E%3Cpath d='M92 88v-5h18v5M118 94l10-5v18l-10-5'/%3E%3Cpath d='M8 100q7-14 14 0t14 0t14 0'/%3E%3Cpath d='M30 132a3 3 0 0 1 6 0a6 6 0 0 1-12 0a9 9 0 0 1 18 0'/%3E%3Ccircle cx='72' cy='70' r='1.2' fill='black'/%3E%3Ccircle cx='132' cy='62' r='1.2' fill='black'/%3E%3Cpath d='M126 134l4-9 4 9-8-5.5h8z'/%3E%3C/svg%3E");
+  /* Mobile breakpoint */
+  --mobile-breakpoint: 700px;
+
+  /* Mobile overrides */
+  --card-width-mobile:           115px;
+  --card-height-mobile:          200px;
+  --card-padding-mobile:          20px 14px 18px;
+  --face-front-font-size-mobile: 18px;
+  --face-back-font-size-mobile:  13px;
+  --lang-label-size-mobile:      8px;
+  --num-size-mobile:             9px;
+  --row-gap-mobile:              50px;
+  --row-padding-x-mobile:        30px;
+  --footer-bottom-mobile:        14px;
+  --footer-font-size-mobile:    12px;
 }
 
+/* Responsive header sizing */
 @media (max-height: 760px) {
   :root {
-    --header-height: 60px;
+    --header-height:     60px;
     --header-title-size: 34px;
-    --header-desc-size: 13px;
+    --header-desc-size:  13px;
   }
 }
 
 @media (max-width: 700px) {
   :root {
-    --header-height: 60px;
+    --header-height:     60px;
     --header-title-size: 30px;
-    --header-desc-size: 12px;
-    --header-pad-x: 20px;
+    --header-desc-size:  12px;
+    --header-pad-x:      20px;
   }
 }

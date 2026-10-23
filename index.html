@@ -1,10 +1,9 @@
-
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Anecdotes — Dangling Cards</title>
+    <title>Anecdotes - Dangling Cards</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,9 +23,13 @@
     <link rel="stylesheet" href="css/breeze.css" />
   </head>
   <body>
+    <!-- Background layers (back to front) -->
+    <div class="wall"></div>
+    <div class="spotlight"></div>
+
     <header class="site-header">
       <h1 class="site-title">Anecdotes</h1>
-      <p class="site-desc">These are stories from people on the internet</p>
+      <p class="site-desc">Tales from people on the internet</p>
     </header>
 
     <div class="top-rail"></div>
@@ -38,6 +41,9 @@
     <div class="footer-hint">
       Scroll horizontally · Tap a card to flip from English → नेपाली
     </div>
+
+    <!-- Floor sits on top of the wall gradient; must come after it in source -->
+    <div class="floor"></div>
 
     <script type="module" src="js/main.js"></script>
   </body>

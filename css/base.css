@@ -1,9 +1,12 @@
-
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+
+/* Root
+   html keeps a fallback color only — the .wall div paints over it.
+*/
 
 html, body {
   height: 100%;
@@ -12,32 +15,47 @@ html, body {
   overflow: hidden;
 }
 
-
-
 html {
   background-color: var(--wall-base);
-  background-image:
-    radial-gradient(
-      ellipse var(--spotlight-width) var(--spotlight-height)
-      at var(--spotlight-x) var(--spotlight-y),
-      var(--spotlight-color),
-      transparent 100%
-    ),
-    radial-gradient(
-      ellipse 34% 46% at 92% 32%,
-      var(--window-glow),
-      transparent 72%
-    ),
-    linear-gradient(
-      180deg,
-      var(--bg-base-top) 0%,
-      var(--bg-base-bottom) 100%
-    );
+}
+
+/* 
+Background layers
+   Each is a fixed full-viewport div, stacked by z-index.
+   Order from back to front:  wall < window-glow < floor < content
+   Mutating one layer never invalidates the others (the original bug).
+*/
+
+/* Solid wall — a single vertical gradient. The base of the scene. */
+.wall {
+  position: fixed;
+  inset: 0;
+  z-index: -5;
+  background: linear-gradient(180deg, var(--wall-top) 0%, var(--wall-bottom) 100%);
 }
 
 
-html::after {
-  content: "";
+/* Warm overhead spotlight from top-center.
+   Height > 100% pushes the ellipse's transparent edge off-screen, so the
+   visible fade never terminates mid-wall (which was the original bright line).
+   The fade stop uses rgba(…,0) instead of `transparent` to avoid the muddy
+   gray interpolation that `transparent` (rgba(0,0,0,0)) produces. */
+.spotlight {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse var(--spotlight-width) var(--spotlight-height)
+    at var(--spotlight-x) var(--spotlight-y),
+    var(--spotlight-color),
+    rgba(255, 252, 243, 0) 100%
+  );
+}
+
+/* Floor — wooden baseboard with a skirting strip on top.
+   Sits above the wall so it masks the bottom edge of the wall gradient. */
+.floor {
   position: fixed;
   left: 0;
   right: 0;
@@ -71,6 +89,9 @@ html::after {
       #9c7a4e 100%
     );
 }
+
+/* Top rail — picture-rail strip directly under the header
+*/
 
 .top-rail {
   position: fixed;
