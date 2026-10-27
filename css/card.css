@@ -1,4 +1,3 @@
-
 .hanger {
   display: flex;
   flex-direction: column;
@@ -18,7 +17,7 @@
 
 .thread {
   width: var(--thread-width);
-  height: var(--thread-len, var(--thread-default-len));
+  height: var(--thread-len);
   background:
     linear-gradient(
       90deg,
@@ -70,45 +69,53 @@
 }
 
 .card {
-  width: calc(var(--card-width) * var(--ratio-w, 1) * var(--depth-scale, 1));
-  height: calc(var(--card-height) * var(--ratio-h, 1) * var(--depth-scale, 1));
+  width: calc(var(--card-width) * var(--ratio-w, 1));
+  min-height: calc(var(--card-height) * var(--ratio-h, 1));
+  max-height: calc(var(--card-max-height) * var(--ratio-h, 1));
   margin: 0 auto;
   position: relative;
   cursor: pointer;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-  transition:
-    transform var(--card-flip-duration) var(--card-flip-easing),
-    translate var(--hover-lift-duration) var(--hover-lift-easing);
+  transition: transform var(--card-flip-duration) var(--card-flip-easing);
   border-radius: var(--card-radius);
+  display: grid;
 }
 
 .card.flipped {
   transform: rotateY(180deg);
 }
 
-.card:hover {
-  translate: 0 0 var(--hover-lift, 8px);
-}
-
 .card.portrait {
   --ratio-w: var(--ratio-portrait-w);
   --ratio-h: var(--ratio-portrait-h);
+  --face-front-font-size: var(--face-front-font-size-portrait);
+  --face-front-line-height: var(--face-front-line-height-portrait);
+  --face-back-font-size: var(--face-back-font-size-portrait);
+  --face-back-line-height: var(--face-back-line-height-portrait);
 }
 
 .card.note {
   --ratio-w: var(--ratio-note-w);
   --ratio-h: var(--ratio-note-h);
+  --face-front-font-size: var(--face-front-font-size-note);
+  --face-front-line-height: var(--face-front-line-height-note);
+  --face-back-font-size: var(--face-back-font-size-note);
+  --face-back-line-height: var(--face-back-line-height-note);
 }
 
 .card.square {
   --ratio-w: var(--ratio-square-w);
   --ratio-h: var(--ratio-square-h);
+  --face-front-font-size: var(--face-front-font-size-square);
+  --face-front-line-height: var(--face-front-line-height-square);
+  --face-back-font-size: var(--face-back-font-size-square);
+  --face-back-line-height: var(--face-back-line-height-square);
 }
 
 .face {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
+  position: relative;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   border-radius: var(--card-radius);
@@ -120,14 +127,7 @@
   text-align: center;
   overflow: hidden;
   box-shadow:
-    var(--shadow-offset-x) var(--shadow-offset-y) var(--card-shadow, 0 10px 18px rgba(0, 0, 0, 0.18)),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
-    inset 0 0 0 2px rgba(0, 0, 0, 0.04);
-}
-
-.card:hover .face {
-  box-shadow:
-    var(--shadow-offset-x) var(--shadow-offset-y) var(--card-shadow-hover, 0 16px 28px rgba(0, 0, 0, 0.26)),
+    var(--card-shadow),
     inset 0 0 0 1px rgba(255, 255, 255, 0.18),
     inset 0 0 0 2px rgba(0, 0, 0, 0.04);
 }
@@ -179,19 +179,13 @@
 
 .face.front .quote {
   font-family: var(--font-script);
-  font-size: clamp(
-    13px,
-    calc(var(--face-front-font-size) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-    26px
-  );
-  line-height: clamp(
-    1.05,
-    calc(var(--face-front-line-height) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-    1.3
-  );
+  font-size: var(--face-front-font-size);
+  line-height: var(--face-front-line-height);
   font-weight: 600;
   max-width: 92%;
   color: var(--card-text-front-quote);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .face.front .hint {
@@ -236,19 +230,13 @@
 
 .face.back .quote {
   font-family: var(--font-devanagari);
-  font-size: clamp(
-    11px,
-    calc(var(--face-back-font-size) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-    18px
-  );
-  line-height: clamp(
-    1.2,
-    calc(var(--face-back-line-height) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-    1.9
-  );
+  font-size: var(--face-back-font-size);
+  line-height: var(--face-back-line-height);
   font-weight: 500;
   max-width: 94%;
   color: var(--card-text-back);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .face.back .hint {
@@ -267,36 +255,29 @@
   .card {
     --card-width: var(--card-width-mobile);
     --card-height: var(--card-height-mobile);
+    --card-max-height: var(--card-max-height-mobile);
+  }
+
+  /* swap in per-variant mobile font sizes */
+  .card.portrait {
+    --face-front-font-size: var(--face-front-font-size-portrait-mobile);
+    --face-back-font-size:  var(--face-back-font-size-portrait-mobile);
+  }
+  .card.note {
+    --face-front-font-size: var(--face-front-font-size-note-mobile);
+    --face-back-font-size:  var(--face-back-font-size-note-mobile);
+  }
+  .card.square {
+    --face-front-font-size: var(--face-front-font-size-square-mobile);
+    --face-back-font-size:  var(--face-back-font-size-square-mobile);
+  }
+
+  .thread {
+    height: var(--thread-len-mobile, var(--thread-len));
   }
 
   .face {
     padding: var(--card-padding-mobile);
-  }
-
-  .face.front .quote {
-    font-size: clamp(
-      11px,
-      calc(var(--face-front-font-size-mobile) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-      22px
-    );
-    line-height: clamp(
-      1.05,
-      calc(var(--face-front-line-height) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-      1.3
-    );
-  }
-
-  .face.back .quote {
-    font-size: clamp(
-      10px,
-      calc(var(--face-back-font-size-mobile) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-      16px
-    );
-    line-height: clamp(
-      1.2,
-      calc(var(--face-back-line-height) * var(--ratio-h, 1) * var(--depth-scale, 1)),
-      1.9
-    );
   }
 
   .face.front .lang-label,

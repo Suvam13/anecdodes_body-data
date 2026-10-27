@@ -27,8 +27,8 @@ export const cards = [
     ne: 'नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू' },
     { en: 'Sample text sample text sample text sample text sample text.',
     ne: 'नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू' },
-    { en: 'Sample text sample text sample text sample text sample text.',
-    ne: 'नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू' },
+    { en: 'Sample text sample text sample text sample text sample text Sample text sample text sample text sample text sample textSample text sample text sample text sample text sample text.',
+    ne: 'नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू नमुना शब्दहरू' },
 ];
 
 export const palette = [

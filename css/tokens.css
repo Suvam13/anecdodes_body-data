@@ -1,29 +1,26 @@
-/* Design tokens
-   All colors, sizes, fonts, and textures live here.
-   Grouped by concern, alphabetized within each group.
-*/
+/* Design tokens */
 
 :root {
 
-  --wall-base:   #FFDDDD;   
-  --wall-top:    #FFECC8;   
-  --wall-bottom: #c4b292;   
+  /* Wall */
+  --wall-base:   #FFDDDD;
+  --wall-top:    #FFECC8;
+  --wall-bottom: #c4b292;
 
-
-  /* Spotlight (warm overhead light from the top-center) */
-  --spotlight-color: #fffefa;  
+  /* Spotlight */
+  --spotlight-color: #fffefa;
   --spotlight-x: 50%;
   --spotlight-y: 0%;
   --spotlight-width:  75%;
-  --spotlight-height: 55%;  /* extends past viewport so the ellipse edge is off-screen, preventing a hard rim */
+  --spotlight-height: 55%;
 
-  /* Floor (wooden baseboard + skirting strip) */
+  /* Floor */
   --floor-height:    14vh;
   --skirting-height: 12px;
-  --skirting-light:  #b8966a;   /* matches floor mid-tone — blends into wood */
-  --skirting-shade:  #9c7a4e;   /* matches floor bottom — darker shading */
+  --skirting-light:  #b8966a;
+  --skirting-shade:  #9c7a4e;
 
-  /* Header  */
+  /* Header */
   --header-height:      72px;
   --header-title-size:  42px;
   --header-desc-size:   14px;
@@ -32,25 +29,30 @@
   --header-accent:      #ff8a12;
   --header-pad-x:       48px;
 
-  /* Top rail (picture-rail strip under the header) */
+  /* Top rail */
   --top-rail-height: 14px;
 
-  /* Stage (perspective container for hanging cards) */
+  /* Stage */
   --stage-padding-top:    calc(var(--header-height) + var(--top-rail-height));
   --stage-padding-bottom: 24px;
   --stage-perspective:    2200px;
 
-  /* Row (horizontal flex of hangers) */
+  /* Row */
   --row-gap:       90px;
   --row-padding-x: 60px;
 
   /* Card */
-  --card-width:          150px;
+  --card-width:          180px;
   --card-height:         248px;
+  --card-max-height:     420px;
   --card-radius:         2px;
   --card-padding:        26px 18px 24px;
   --card-flip-duration:  0.85s;
   --card-flip-easing:    cubic-bezier(0.45, 0.05, 0.2, 1);
+
+  /* Card shadow (single, static) */
+  --card-shadow: 6px 14px 18px -7px rgba(74, 44, 18, 0.30),
+                 2px 4px 6px rgba(74, 44, 18, 0.16);
 
   /* Card colors */
   --card-color:           #34d048;
@@ -59,73 +61,56 @@
   --card-text-front-quote:#1a1710;
   --card-text-back:       #14110a;
 
-  /* Thread (the string hanging each card) */
+  /* Thread */
   --thread-width:           1.6px;
   --thread-color-top:       rgba(40, 32, 24, 0.75);
   --thread-color-bottom:    rgba(40, 32, 24, 0.4);
-  --thread-default-len:     160px;
+  --thread-len:             160px;
   --thread-highlight-color: rgba(255, 245, 220, 0.35);
   --thread-highlight-width: 0.5px;
 
-  /* Pushpin (top of thread) and knot (bottom of thread) */
+  /* Pushpin + knot */
   --pushpin-size: 7px;
   --knot-size:    5px;
   --knot-color:   #2a241c;
 
-  /*  Typography */
+  /* Typography */
   --text-color:        #372e18;
   --font-body:         'Inter', sans-serif;
   --font-script:       'Caveat', cursive;
   --font-devanagari:   'Noto Sans Devanagari', sans-serif;
 
   /* Card face typography */
-  --face-front-font-size:   22px;
-  --face-front-line-height: 1.15;
-  --face-back-font-size:    15px;
-  --face-back-line-height:  1.7;
+  
+  /* Front face — per variant */
+  --face-front-font-size-portrait: 19px;
+  --face-front-font-size-note:      16px;
+  --face-front-font-size-square:    18px;
+  --face-front-line-height-portrait: 1.15;
+  --face-front-line-height-note:     1.2;
+  --face-front-line-height-square:   0.9;
+  --face-front-font-size-min:        11px;
+
+  /* Back face — per variant */
+  --face-back-font-size-portrait:  15px;
+  --face-back-font-size-note:      13px;
+  --face-back-font-size-square:    11px;
+  --face-back-line-height-portrait: 1.7;
+  --face-back-line-height-note:     1.75;
+  --face-back-line-height-square:   1.8;
+  --face-back-font-size-min:        9px;
+
   --lang-label-size:        9px;
   --num-size:               10px;
   --hint-size:              13px;
 
-  /* Footer hint */
+  /* Footer */
   --footer-bottom:     18px;
   --footer-font-size:  14px;
   --footer-bg:         #f7f0df;
   --footer-text:       #3d352b;
 
-  /* Card shadow offsets (shared across depth tiers) */
-  --shadow-offset-x: 6px;
-  --shadow-offset-y: 14px;
-
-  /* Depth tiers (near / mid / far cards) */
-  --depth-near-scale:        1.15;
-  --depth-near-shadow:       10px 22px 26px -8px rgba(74, 44, 18, 0.38),
-                             3px 6px 8px rgba(74, 44, 18, 0.22);
-  --depth-near-shadow-hover: 14px 32px 38px -10px rgba(74, 44, 18, 0.46),
-                             4px 10px 14px rgba(74, 44, 18, 0.26);
-  --depth-near-haze:         none;
-  --depth-near-swing-amp:    2deg;
-  --depth-near-hover-lift:   14px;
-
-  --depth-mid-scale:         1.0;
-  --depth-mid-shadow:        7px 15px 18px -7px rgba(74, 44, 18, 0.30),
-                             2px 4px 6px rgba(74, 44, 18, 0.16);
-  --depth-mid-shadow-hover: 10px 24px 28px -9px rgba(74, 44, 18, 0.38),
-                             3px 7px 10px rgba(74, 44, 18, 0.20);
-  --depth-mid-haze:          none;
-  --depth-mid-swing-amp:     1.4deg;
-  --depth-mid-hover-lift:    10px;
-
-  --depth-far-scale:         0.88;
-  --depth-far-shadow:        4px 8px 10px -4px rgba(74, 44, 18, 0.18),
-                             1px 2px 3px rgba(74, 44, 18, 0.10);
-  --depth-far-shadow-hover:  6px 14px 16px -6px rgba(74, 44, 18, 0.26),
-                             2px 4px 6px rgba(74, 44, 18, 0.14);
-  --depth-far-haze:          rgba(245, 235, 215, 0.03);
-  --depth-far-swing-amp:     0.8deg;
-  --depth-far-hover-lift:     6px;
-
-  /* Card aspect ratios (ratio-w / ratio-h multiply card-size) */
+  /* Card aspect ratios (per size variant) */
   --ratio-portrait-w: 1.0;
   --ratio-portrait-h: 1.0;
   --ratio-note-w:     1.05;
@@ -133,21 +118,16 @@
   --ratio-square-w:   0.92;
   --ratio-square-h:   0.67;
 
-  /* Hover lift animation */
-  --hover-lift-duration: 0.35s;
-  --hover-lift-easing:   cubic-bezier(0.2, 0.7, 0.3, 1);
+  /* Swing */
+  --swing-amp: 1.4deg;
 
-  /* Breeze animation */
+  /* Breeze */
   --breeze-duration:    4s;
   --breeze-gust-angle:  3.5deg;
   --breeze-easing:      cubic-bezier(0.45, 0.05, 0.55, 0.95);
   --breeze-stagger:     90ms;
 
-  /* Auto-scroll behavior */
-  --auto-scroll-speed:   22px;
-  --auto-scroll-pause-ms: 3500;
-
-  /* Textures (inline SVG noise patterns) */
+  /* Textures */
   --tex-grain-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .12 0 0 0 0 .08 0 0 0 0 .04 0 0 0 .65 -.27'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   --tex-grain-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .97 0 0 0 0 .9 0 0 0 .65 -.28'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
   --tex-wood: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='720'%3E%3Cfilter id='n' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.3 .005' numOctaves='4' seed='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .24 0 0 0 0 .12 0 0 0 0 .04 .8 0 0 0 -.36'/%3E%3C/filter%3E%3Crect width='240' height='720' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -158,18 +138,25 @@
   /* Mobile overrides */
   --card-width-mobile:           115px;
   --card-height-mobile:          200px;
+  --card-max-height-mobile:      360px;
   --card-padding-mobile:          20px 14px 18px;
-  --face-front-font-size-mobile: 18px;
-  --face-back-font-size-mobile:  13px;
+
+  --face-front-font-size-portrait-mobile: 18px;
+  --face-front-font-size-note-mobile:      15px;
+  --face-front-font-size-square-mobile:    12px;
+  --face-back-font-size-portrait-mobile:  13px;
+  --face-back-font-size-note-mobile:      11px;
+  --face-back-font-size-square-mobile:    10px;
+
   --lang-label-size-mobile:      8px;
   --num-size-mobile:             9px;
   --row-gap-mobile:              50px;
   --row-padding-x-mobile:        30px;
   --footer-bottom-mobile:        14px;
   --footer-font-size-mobile:    12px;
+  --thread-len-mobile:           200px;
 }
 
-/* Responsive header sizing */
 @media (max-height: 760px) {
   :root {
     --header-height:     60px;
