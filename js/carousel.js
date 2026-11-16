@@ -41,7 +41,7 @@ function sine(i, freq, phase) {
 
 function sizeFromSine(sinVal) {
   if (sinVal > 0.85) return 'square';
-  if (sinVal > 0.20) return 'note';
+  if (sinVal > 0.10) return 'note';
   return 'portrait';
 }
 

@@ -42,11 +42,11 @@
   --row-padding-x: 60px;
 
   /* Card */
-  --card-width:          180px;
-  --card-height:         248px;
-  --card-max-height:     420px;
+  --card-width:          200px;
+  --card-height:         255px;
+  --card-max-height:     430px;
   --card-radius:         2px;
-  --card-padding:        26px 18px 24px;
+  --card-padding:        26px 18px 30px;
   --card-flip-duration:  0.85s;
   --card-flip-easing:    cubic-bezier(0.45, 0.05, 0.2, 1);
 
@@ -56,9 +56,9 @@
 
   /* Card colors */
   --card-color:           #34d048;
-  --card-color-back:      #22b839;
-  --card-text-front:      #1f1c14;
-  --card-text-front-quote:#1a1710;
+  --card-color-back:      #27cd40;
+  --card-text-front:      #393121;
+  --card-text-front-quote:#3e3112;
   --card-text-back:       #14110a;
 
   /* Thread */
@@ -75,34 +75,34 @@
   --knot-color:   #2a241c;
 
   /* Typography */
-  --text-color:        #372e18;
+  --text-color:        #433924;
   --font-body:         'Inter', sans-serif;
-  --font-script:       'Caveat', cursive;
+  --font-script: 'Playpen Sans', 'Caveat', cursive;
   --font-devanagari:   'Noto Sans Devanagari', sans-serif;
 
   /* Card face typography */
   
   /* Front face — per variant */
-  --face-front-font-size-portrait: 19px;
+  --face-front-font-size-portrait:  17px;
   --face-front-font-size-note:      16px;
-  --face-front-font-size-square:    18px;
+  --face-front-font-size-square:    15px;
   --face-front-line-height-portrait: 1.15;
   --face-front-line-height-note:     1.2;
-  --face-front-line-height-square:   0.9;
+  --face-front-line-height-square:   1.0;
   --face-front-font-size-min:        11px;
 
   /* Back face — per variant */
-  --face-back-font-size-portrait:  15px;
-  --face-back-font-size-note:      13px;
-  --face-back-font-size-square:    11px;
-  --face-back-line-height-portrait: 1.7;
-  --face-back-line-height-note:     1.75;
-  --face-back-line-height-square:   1.8;
+  --face-back-font-size-portrait:  16px;
+  --face-back-font-size-note:      15px;
+  --face-back-font-size-square:    14px;
+  --face-back-line-height-portrait: 1.3;
+  --face-back-line-height-note:     1.4;
+  --face-back-line-height-square:   1.6;
   --face-back-font-size-min:        9px;
 
   --lang-label-size:        9px;
   --num-size:               10px;
-  --hint-size:              13px;
+  --hint-size:              12px;
 
   /* Footer */
   --footer-bottom:     18px;
